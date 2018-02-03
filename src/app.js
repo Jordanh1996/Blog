@@ -2,17 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter, NavLink, Route, Switch, Link} from 'react-router-dom';
-import configureStore from './store/configureStore';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
 import Website, {history} from './routers/AppRouter';
-import {login, logout} from './actions/auth';
 import 'react-dates/lib/css/_datepicker.css';
-import {firebase} from './firebase/firebase';
-import LoadingPage from './components/loadingPage'
+import LoadingPage from './components/loadingPage';
+import configureStore from './store/configureStore';
 
-const store = configureStore();
-
+const store = configureStore()
 
 const jsx = (
     <Provider store={store}>
@@ -32,16 +29,4 @@ const renderApp = () => {
 ReactDOM.render(<LoadingPage />, document.getElementById("app"))
 
 
-firebase.auth().onAuthStateChanged((user) => {
-if (user) {
-    store.dispatch(login(user.uid))
-    renderApp()
-    if (history.location.pathname === '/') {
-        history.push('/dashboard')
-    }
-} else {
-    store.dispatch(logout())
-    renderApp()
-    history.push('/')
-}
-})
+renderApp()

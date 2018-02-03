@@ -1,9 +1,19 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import Header from './header';
+import BlogList from './blogList';
 
 const Dashboard = (props) => (
     <div>
-        Dashboard page content
+        <Header />
+        <BlogList />
     </div>
 )
 
-export default Dashboard
+const mapStateToProps = (state) => {
+    return {
+        blogs: state
+    }
+}
+
+export default connect(mapStateToProps)(Dashboard)

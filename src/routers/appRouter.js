@@ -4,9 +4,8 @@ import createHistory from 'history/createBrowserHistory';
 import Header from '../components/header';
 import Notfound from '../components/notfound';
 import Dashboard from '../components/Dashboard';
-import LoginPage from '../components/loginPage';
-import PrivateRoute from './privateRoute';
-import PublicRoute from './publicRoute';
+import AddBlog from '../components/addblog';
+import Blog from '../components/blog'
 
 
 export const history = createHistory();
@@ -16,8 +15,9 @@ const Website = () => (
     <Router history={history}>
         <div>
             <Switch>
-                <PublicRoute path="/" component={LoginPage} exact={true} />
-                <PrivateRoute path="/dashboard" component={Dashboard} />
+                <Route path="/" component={Dashboard} exact={true} />
+                <Route path="/addblog" component={AddBlog} />
+                <Route path="/:id" component={Blog} />
                 <Route component={Notfound} />
             </Switch>
         </div>
