@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, NavLink, Route, Switch, Link} from 'react-router-dom';
 import 'normalize.css/normalize.css';
 import './styles/styles.scss';
-import Website, {history} from './routers/AppRouter';
+import Website, {history} from './routers/appRouter';
 import 'react-dates/lib/css/_datepicker.css';
 import LoadingPage from './components/loadingPage';
 import configureStore from './store/configureStore';
