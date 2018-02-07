@@ -19,7 +19,7 @@ const BlogList = (props) => (
 
 const mapStateToProps = (state) => {
     return {
-        blogs: state
+        blogs: state.blogs
     }
 }
 

@@ -13,7 +13,7 @@ const blog = (props) => (
 
 const mapStateToProps = (state, props) => {
     return {
-        blog: state.find((blog) => blog.id === props.match.params.id)
+        blog: state.blogs.find((blog) => blog.id === props.match.params.id)
     }
 }
 

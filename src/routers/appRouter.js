@@ -5,8 +5,8 @@ import Header from '../components/header';
 import Notfound from '../components/notfound';
 import Dashboard from '../components/Dashboard';
 import AddBlog from '../components/addblog';
-import Blog from '../components/blog'
-
+import Blog from '../components/blog';
+import LoginPage from '../components/loginpage';
 
 export const history = createHistory();
 
@@ -17,7 +17,8 @@ const Website = () => (
             <Switch>
                 <Route path="/" component={Dashboard} exact={true} />
                 <Route path="/addblog" component={AddBlog} />
-                <Route path="/:id" component={Blog} />
+                <Route path="/blog/:id" component={Blog} />
+                <Route path="/login" component={LoginPage} />
                 <Route component={Notfound} />
             </Switch>
         </div>

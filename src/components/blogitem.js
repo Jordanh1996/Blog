@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 
 const BlogItem = (props) => (
-    <Link to={`/${props.id}`}>
+    <Link to={`/blog/${props.id}`}>
         {props.title} : {props.content}
     </Link>
 )
