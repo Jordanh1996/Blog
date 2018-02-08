@@ -7,6 +7,7 @@ import Dashboard from '../components/Dashboard';
 import AddBlog from '../components/addblog';
 import Blog from '../components/blog';
 import LoginPage from '../components/loginpage';
+import Register from '../components/register';
 
 export const history = createHistory();
 
@@ -19,6 +20,7 @@ const Website = () => (
                 <Route path="/addblog" component={AddBlog} />
                 <Route path="/blog/:id" component={Blog} />
                 <Route path="/login" component={LoginPage} />
+                <Route path="/register" component={Register} />
                 <Route component={Notfound} />
             </Switch>
         </div>

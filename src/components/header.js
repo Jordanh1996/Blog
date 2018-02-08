@@ -28,10 +28,18 @@ class Header extends React.Component {
                                 Log Out
                             </button>
                             :
-                            <Link to='/login'>
-                                <p>Log in</p>
-                            </Link>
+                            <div>
+                                <Link to='/login'>
+                                    <p>Log in</p>
+                                </Link>
+
+                                <Link to='/register'>
+                                    Dont have a User yet? Register
+                                </Link>
+                            </div>
                         }
+
+
         
         
                         <Link to='/addblog'>

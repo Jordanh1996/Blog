@@ -25,9 +25,9 @@ class LoginPage extends React.Component {
         this.setState(() => ({password}))
     }
 
-    onLogin = async () => {
+    onLogin = () => {
         this.setState(() => ({loadgif: 'gif'}))
-        await this.props.dispatchLogin(this.state.username, this.state.password).then(() => {
+        this.props.dispatchLogin(this.state.username, this.state.password).then(() => {
             this.props.history.push('/')
         }).catch(() => {
             this.setState(() => ({loadgif: 'error'}))
