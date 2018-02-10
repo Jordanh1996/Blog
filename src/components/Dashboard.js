@@ -6,13 +6,17 @@ import BlogList from './blogList';
 const Dashboard = (props) => (
     <div>
         <Header />
+        {
+            props.username && <p>Welcome back, {props.username}</p>
+        }
         <BlogList />
     </div>
 )
 
 const mapStateToProps = (state) => {
     return {
-        blogs: state.blogs
+        blogs: state.blogs,
+        username: state.user.username
     }
 }
 

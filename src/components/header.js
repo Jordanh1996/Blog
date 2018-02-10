@@ -19,14 +19,17 @@ class Header extends React.Component {
                         <Link to='/'>
                             <h1>Home</h1>
                         </Link>
-        
+                        
                         {
                             this.props.token ? 
-                            <button
-                            onClick={this.onSignOut}
-                            >
-                                Log Out
-                            </button>
+                            <div>
+                                
+                                <button
+                                onClick={this.onSignOut}
+                                >
+                                    Log Out
+                                </button>
+                            </div>
                             :
                             <div>
                                 <Link to='/login'>

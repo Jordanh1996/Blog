@@ -139,6 +139,8 @@ class Register extends React.Component {
                     <p></p>
                 }
                 {
+                    this.state.username === '' ?
+                    <p></p> :
                     this.state.validusername === 'pending' ?
                     <img className='image-register' src='/images/loader.gif' /> :
                     this.state.validusername ? 
@@ -152,6 +154,13 @@ class Register extends React.Component {
                 onChange={this.onPasswordChange}
                 />
                 {
+                    this.state.password.length < 6 ?
+                    <p>username must include at least 6 characters</p> :
+                    <p></p>
+                }
+                {   
+                    this.state.password === '' ?
+                    <p></p> :
                     this.state.validpassword ?
                     <img className='image-register' src="/images/check.png" /> :
                     <img className='image-register' src="/images/xmark.png" />
@@ -163,6 +172,8 @@ class Register extends React.Component {
                 onChange={this.onConfirmPasswordChange}
                 />
                 {
+                    this.state.confirmPassword === '' ?
+                    <p></p> :
                     this.state.validConfirmPassword ?
                     <img className='image-register' src="/images/check.png" /> :
                     <img className='image-register' src="/images/xmark.png" />
@@ -179,6 +190,8 @@ class Register extends React.Component {
                     <p>Enter a valid email</p>
                 }
                 {
+                    this.state.email === '' ?
+                    <p></p> :
                     this.state.validEmail === 'pending' ?
                     <img className='image-register' src='/images/loader.gif' /> :
                     this.state.validEmail ? 
