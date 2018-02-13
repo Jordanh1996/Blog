@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {connect} from 'react-redux';
 
-export default class BlogForm extends React.Component {
+class BlogForm extends React.Component {
 
     constructor(props) {
         super(props)
@@ -22,7 +23,7 @@ export default class BlogForm extends React.Component {
     }
 
     onSubmit = () => {
-        this.props.onSubmit(this.state.title, this.state.content)
+        this.props.onSubmit(this.props.token, this.state.title, this.state.content)
     }
 
 
@@ -49,3 +50,11 @@ export default class BlogForm extends React.Component {
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        token: state.user.token
+    }
+}
+
+export default connect(mapStateToProps)(BlogForm);

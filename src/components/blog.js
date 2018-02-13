@@ -5,15 +5,16 @@ import Header from './header';
 const blog = (props) => (
     <div>
         <Header />
+        {props.blog._creatorUser} : 
         {props.blog.title}
-            sdfsdf
+            
         {props.blog.content}
     </div>
 )
 
 const mapStateToProps = (state, props) => {
     return {
-        blog: state.blogs.find((blog) => blog.id === props.match.params.id)
+        blog: state.blogs.find((blog) => blog._id === props.match.params.id)
     }
 }
 

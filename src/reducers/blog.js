@@ -11,6 +11,9 @@ export default (state = [], action) => {
         case "REMOVE_BLOG":
             return state.filter((blog) => blog.title !== action.title)
 
+        case "SET_BLOGS":
+            return action.blogs
+
         default: 
             return state
     }

@@ -1,5 +1,7 @@
 import React from 'react';
 import { Router, Route, Switch} from 'react-router-dom';
+import PrivateRoute from './privateRoute';
+import PublicRoute from './publicRoute';
 import createHistory from 'history/createBrowserHistory';
 import Header from '../components/header';
 import Notfound from '../components/notfound';
@@ -17,10 +19,10 @@ const Website = () => (
         <div>
             <Switch>
                 <Route path="/" component={Dashboard} exact={true} />
-                <Route path="/addblog" component={AddBlog} />
+                <PrivateRoute path="/addblog" component={AddBlog} />
                 <Route path="/blog/:id" component={Blog} />
-                <Route path="/login" component={LoginPage} />
-                <Route path="/register" component={Register} />
+                <PublicRoute path="/login" component={LoginPage} />
+                <PublicRoute path="/register" component={Register} />
                 <Route component={Notfound} />
             </Switch>
         </div>

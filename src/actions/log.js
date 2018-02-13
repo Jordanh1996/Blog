@@ -15,7 +15,7 @@ export const DispatchLogIn = (token, username) => ({
             return new Promise((resolve, reject) => {
                 axios({
                     method: 'post',
-                    url: 'https://blogserver-jordan.herokuapp.com/login',
+                    url: 'https://blogserver-jordan.herokuapp.com/log/in',
                     data: {
                         username,
                         password
@@ -39,7 +39,7 @@ export const DispatchLogOut = () => ({
         return (dispatch) => {
             axios({
                 method: 'delete',
-                url: 'https://blogserver-jordan.herokuapp.com/logout',
+                url: 'https://blogserver-jordan.herokuapp.com/log/out',
                 headers: {'x-auth': token}
             }).then(() => {
                 persistor.purge()

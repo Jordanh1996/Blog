@@ -41,7 +41,7 @@ class Register extends React.Component {
             if (this.state.username.length >= 6) {
                 axios({
                     method: 'GET',
-                    url: `https://blogserver-jordan.herokuapp.com/usercheck/${this.state.username}`
+                    url: `https://blogserver-jordan.herokuapp.com/register/${this.state.username}`
                 }).then((res) => {
                     if (res.data) {
                         return this.setState(() => ({validusername: true}))
@@ -88,7 +88,7 @@ class Register extends React.Component {
             if (validator.isEmail(email)) {
                 axios({
                     method: 'POST',
-                    url: 'https://blogserver-jordan.herokuapp.com/emailcheck',
+                    url: 'https://blogserver-jordan.herokuapp.com/register/emailcheck',
                     data: {
                         email
                     }

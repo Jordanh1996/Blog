@@ -2,14 +2,21 @@ import React from 'react';
 import {connect} from 'react-redux';
 import BlogForm from './blogForm';
 import Header from './header';
-import {DispatchAddBlog} from '../actions/blog';
+import {startDispatchAddBlog} from '../actions/blog';
 
 
 class AddBlog extends React.Component {
 
-    onSubmit = (title, content) => {
-        this.props.onSubmit(title, content)
-        this.props.history.push('/')
+    state = {
+        error: undefined
+    }
+
+    onSubmit = (token, title, content) => {
+        this.props.onSubmit(token, title, content).then(() => {
+            this.props.history.push('/')
+            }).catch(() => {
+                this.setState(() => ({error: true}))
+            })
     }
 
     render() {
@@ -19,6 +26,7 @@ class AddBlog extends React.Component {
                 <BlogForm 
                     onSubmit={this.onSubmit}
                 />
+                {this.state.error && <p>there was an error posting your blog</p>}
             </div>
         )
     }
@@ -26,7 +34,7 @@ class AddBlog extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onSubmit: (title, content) => dispatch(DispatchAddBlog(title, content))
+        onSubmit: (token, title, content) => dispatch(startDispatchAddBlog(token, title, content))
     }
 }
 
