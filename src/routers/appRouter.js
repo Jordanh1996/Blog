@@ -10,6 +10,7 @@ import AddBlog from '../components/addblog';
 import Blog from '../components/blog';
 import LoginPage from '../components/loginpage';
 import Register from '../components/register';
+import EditBlog from '../components/editblog';
 
 export const history = createHistory();
 
@@ -20,7 +21,8 @@ const Website = () => (
             <Switch>
                 <Route path="/" component={Dashboard} exact={true} />
                 <PrivateRoute path="/addblog" component={AddBlog} />
-                <Route path="/blog/:id" component={Blog} />
+                <Route path="/blog/:id" component={Blog} exact={true} />
+                <Route path="/blog/edit/:id" component={EditBlog} />
                 <PublicRoute path="/login" component={LoginPage} />
                 <PublicRoute path="/register" component={Register} />
                 <Route component={Notfound} />

@@ -12,20 +12,14 @@ export const DispatchAddBlog = (title, content) => ({
 
 export const startDispatchAddBlog = (token, title, content) => {
     return (dispatch) => {
-        return new Promise((resolve, reject) => {
-            axios({
-                method: "post",
-                url: 'https://blogserver-jordan.herokuapp.com/blog',
-                headers: {'x-auth': token},
-                data: {
-                    title,
-                    content
-                }
-            }).then(() => {
-                resolve()
-            }).catch(() => {
-                reject()
-            })
+        return axios({
+            method: "post",
+            url: 'https://blogserver-jordan.herokuapp.com/blog',
+            headers: {'x-auth': token},
+            data: {
+                title,
+                content
+            }
         })
     }
 }
@@ -47,6 +41,38 @@ export const startDispatchSetBlogs = () => {
             url: 'https://blogserver-jordan.herokuapp.com/blog'
         }).then((res) => {
             dispatch(DispatchSetBlogs(res.data.resblog))
+        })
+    }
+}
+
+export const startDispatchGetBlog = (id) => {
+    return (dispatch) => {
+        axios({
+            method: "get",
+            url: `https://blogserver-jordan.herokuapp.com/blog/${id}`
+        }).then((res) => {
+            dispatch(DispatchSetBlogs([res.data.resblog]))
+        })
+    }
+}
+
+export const DispatchEditBlog = (id, title, content) => ({
+    type: "EDIT_BLOG",
+    id,
+    title,
+    content
+})
+
+export const startDispatchEditBlog = (token, id, title, content) => {
+    return (dispatch) => {
+        return axios({
+            method: "patch",
+            url: `https://blogserver-jordan.herokuapp.com/blog/${id}`,
+            headers: {'x-auth': token},
+            data: {
+                title,
+                content
+            }
         })
     }
 }

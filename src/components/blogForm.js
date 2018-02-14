@@ -7,8 +7,8 @@ class BlogForm extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            title: '',
-            content: ''
+            title: props.blog ? props.blog.title : '',
+            content: props.blog ? props.blog.content : ''
         }
     }
 
