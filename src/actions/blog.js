@@ -34,13 +34,20 @@ export const DispatchSetBlogs = (blogs) => ({
     blogs
 })
 
-export const startDispatchSetBlogs = () => {
+export const DispatchConcatBlogs = (blogs) => ({
+    type: "CONCAT_BLOGS",
+    blogs
+})
+
+export const startDispatchSetBlogs = (amount, end) => {
     return (dispatch) => {
-        axios({
-            method: "GET",
-            url: 'https://blogserver-jordan.herokuapp.com/blog'
-        }).then((res) => {
-            dispatch(DispatchSetBlogs(res.data.resblog))
+        return axios({
+            method: "post",
+            url: 'https://blogserver-jordan.herokuapp.com/blog/get',
+            data: {
+                amount,
+                end
+            }
         })
     }
 }
