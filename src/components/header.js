@@ -20,6 +20,10 @@ class Header extends React.Component {
                             <h1>Home</h1>
                         </Link>
                         
+                        <Link to='/search'>
+                            Search Blogs
+                        </Link>
+
                         {
                             this.props.token ? 
                             <div>

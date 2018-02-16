@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import axios from 'axios';
+import {checkUsername, checkEmail, PostRegister} from '../axios/register';
 import {startDispatchLogIn} from '../actions/log';
 import validator from 'validator';
 import { setTimeout, clearTimeout } from 'timers';
@@ -39,10 +39,8 @@ class Register extends React.Component {
         }
         this.setState(() => ({userint: setTimeout(() => {
             if (this.state.username.length >= 6) {
-                axios({
-                    method: 'GET',
-                    url: `https://blogserver-jordan.herokuapp.com/register/${this.state.username}`
-                }).then((res) => {
+                checkUsername(this.state.username)
+                .then((res) => {
                     if (res.data) {
                         return this.setState(() => ({validusername: true}))
                     }
@@ -86,13 +84,8 @@ class Register extends React.Component {
         }
         this.setState(() => ({emailint: setTimeout(() => {
             if (validator.isEmail(email)) {
-                axios({
-                    method: 'POST',
-                    url: 'https://blogserver-jordan.herokuapp.com/register/emailcheck',
-                    data: {
-                        email
-                    }
-                }).then((res) => {
+                checkEmail(email)
+                .then((res) => {
                     if (res.data) {
                         return this.setState(() => ({validEmail: true}))
                     }
@@ -111,11 +104,8 @@ class Register extends React.Component {
             username: this.state.username,
             password: this.state.password
         }
-        axios({
-            method: 'POST',
-            url: 'https://blogserver-jordan.herokuapp.com/register',
-            data: JSONbody
-        }).then((res) => {
+        PostRegister(JSONbody)
+        .then((res) => {
             this.props.dispatchLogIn(this.state.username, this.state.password).then(() => {
                 this.props.history.push('/')
             })

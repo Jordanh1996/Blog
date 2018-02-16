@@ -1,10 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import axios from 'axios';
+import {Remove} from '../axios/blog';
 import Header from './header';
 import RemoveModal from './removeModal';
-import {startDispatchGetBlog} from '../actions/blog';
+import {startDispatchGetBlog, DispatchSetBlogs} from '../actions/blog';
 
 class Blog extends React.Component {
 
@@ -15,7 +15,9 @@ class Blog extends React.Component {
 
     componentWillMount() {
         if (!this.props.blog) {
-            this.props.dispatchGetBlog(this.props.match.params.id)
+            this.props.dispatchGetBlog(this.props.match.params.id).then((res) => {
+                this.props.dispatchSetBlog([res.data.resblog])
+            })
         }
     }
 
@@ -29,11 +31,8 @@ class Blog extends React.Component {
 
     confirmRemove = () => {
         this.closeModal()
-        axios({
-            method: "delete",
-            url: `https://blogserver-jordan.herokuapp.com/blog/${this.props.match.params.id}`,
-            headers: {'x-auth': this.props.user.token}
-        }).then(() => {
+        Remove(this.props.match.params.id, this.props.user.token)
+        .then(() => {
             this.props.history.push('/')
         })
     }
@@ -88,7 +87,8 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        dispatchGetBlog: (id) => dispatch(startDispatchGetBlog(id))
+        dispatchGetBlog: (id) => dispatch(startDispatchGetBlog(id)),
+        dispatchSetBlog: (blog) => dispatch(DispatchSetBlogs(blog))
     }
 }
 

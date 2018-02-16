@@ -11,6 +11,7 @@ import Blog from '../components/blog';
 import LoginPage from '../components/loginpage';
 import Register from '../components/register';
 import EditBlog from '../components/editblog';
+import SearchBlogs from '../components/searchBlogs';
 
 export const history = createHistory();
 
@@ -22,6 +23,7 @@ const Website = () => (
                 <Route path="/" component={Dashboard} exact={true} />
                 <PrivateRoute path="/addblog" component={AddBlog} />
                 <Route path="/blog/:id" component={Blog} exact={true} />
+                <Route path='/search' component={SearchBlogs} />
                 <Route path="/blog/edit/:id" component={EditBlog} />
                 <PublicRoute path="/login" component={LoginPage} />
                 <PublicRoute path="/register" component={Register} />

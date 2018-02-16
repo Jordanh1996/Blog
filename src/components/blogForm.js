@@ -8,7 +8,8 @@ class BlogForm extends React.Component {
         super(props)
         this.state = {
             title: props.blog ? props.blog.title : '',
-            content: props.blog ? props.blog.content : ''
+            content: props.blog ? props.blog.content : '',
+            disable: false
         }
     }
 
@@ -23,6 +24,7 @@ class BlogForm extends React.Component {
     }
 
     onSubmit = () => {
+        this.setState(() => ({disable: true}))
         this.props.onSubmit(this.props.token, this.state.title, this.state.content)
     }
 
@@ -43,7 +45,7 @@ class BlogForm extends React.Component {
                     onChange={this.onContentChange}
                     />
 
-                    <button onClick={this.onSubmit}>
+                    <button onClick={this.onSubmit} disabled={this.state.disable}>
                         submit
                     </button>
             </div>

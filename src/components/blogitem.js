@@ -5,6 +5,27 @@ import {Link} from 'react-router-dom';
 const BlogItem = (props) => (
     <Link to={`/blog/${props.id}`}>
         {props.title} : {props.content}
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        
     </Link>
 )
 

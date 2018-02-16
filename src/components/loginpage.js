@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {startDispatchLogIn} from '../actions/log';
+import {startDispatchLogIn, DispatchLogIn} from '../actions/log';
 
 
 class LoginPage extends React.Component {
@@ -27,7 +27,8 @@ class LoginPage extends React.Component {
 
     onLogin = () => {
         this.setState(() => ({loadgif: 'gif'}))
-        this.props.dispatchLogin(this.state.username, this.state.password).then(() => {
+        this.props.startDispatchLogin(this.state.username, this.state.password).then((res) => {
+            this.props.DispatchLogin(res.data.tokens[0].token, this.state.username)
             this.props.history.push('/')
         }).catch(() => {
             this.setState(() => ({loadgif: 'error'}))
@@ -79,7 +80,8 @@ class LoginPage extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        dispatchLogin: (username, password) => dispatch(startDispatchLogIn(username, password)) 
+        startDispatchLogin: (username, password) => dispatch(startDispatchLogIn(username, password)),
+        DispatchLogin: (token, username) => dispatch(DispatchLogIn(token, username))
     }
 }
 

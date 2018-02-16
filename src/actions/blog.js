@@ -1,5 +1,5 @@
 import uuid from 'uuid';
-import axios from 'axios';
+import {getBlogs, getBlogById, AddBlog, EditBlog} from '../axios/blog';
 
 export const DispatchAddBlog = (title, content) => ({
     type: "ADD_BLOG",
@@ -12,15 +12,7 @@ export const DispatchAddBlog = (title, content) => ({
 
 export const startDispatchAddBlog = (token, title, content) => {
     return (dispatch) => {
-        return axios({
-            method: "post",
-            url: 'https://blogserver-jordan.herokuapp.com/blog',
-            headers: {'x-auth': token},
-            data: {
-                title,
-                content
-            }
-        })
+        return AddBlog(token, title, content)
     }
 }
 
@@ -39,27 +31,15 @@ export const DispatchConcatBlogs = (blogs) => ({
     blogs
 })
 
-export const startDispatchSetBlogs = (amount, end) => {
+export const startDispatchSetBlogs = (amount, last) => {
     return (dispatch) => {
-        return axios({
-            method: "post",
-            url: 'https://blogserver-jordan.herokuapp.com/blog/get',
-            data: {
-                amount,
-                end
-            }
-        })
+        return getBlogs(amount, last)
     }
 }
 
 export const startDispatchGetBlog = (id) => {
     return (dispatch) => {
-        axios({
-            method: "get",
-            url: `https://blogserver-jordan.herokuapp.com/blog/${id}`
-        }).then((res) => {
-            dispatch(DispatchSetBlogs([res.data.resblog]))
-        })
+        return getBlogById(id)
     }
 }
 
@@ -72,14 +52,6 @@ export const DispatchEditBlog = (id, title, content) => ({
 
 export const startDispatchEditBlog = (token, id, title, content) => {
     return (dispatch) => {
-        return axios({
-            method: "patch",
-            url: `https://blogserver-jordan.herokuapp.com/blog/${id}`,
-            headers: {'x-auth': token},
-            data: {
-                title,
-                content
-            }
-        })
+        return EditBlog(token, id, title, content)
     }
 }

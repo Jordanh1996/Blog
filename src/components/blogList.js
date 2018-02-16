@@ -11,8 +11,8 @@ class BlogList extends React.Component {
     }
 
     componentDidMount() {
-        this.props.dispatchSetBlogs(15).then((res) => {
-            this.props.SetBlogs(res.data.resblog.reverse())
+        this.props.dispatchSetBlogs(2).then((res) => {
+            this.props.SetBlogs(res.data.resblog)
             document.addEventListener('scroll', this.trackScrolling);
         })
     }
@@ -22,11 +22,14 @@ class BlogList extends React.Component {
     }
 
     trackScrolling = () => {
-        if (this.isBottom(this.refs.bottom) && this.props.blogs[this.props.blogs.length - 1].index > 1) {
+        if (this.isBottom(this.refs.bottom)) {
             this.setState(() => ({loading: true}))
             document.removeEventListener('scroll', this.trackScrolling)
-            this.props.dispatchSetBlogs(10, this.props.blogs[this.props.blogs.length - 1].index - 1).then((res) => {
-                this.props.ConcatBlogs(res.data.resblog.reverse())
+            this.props.dispatchSetBlogs(2, this.props.blogs[this.props.blogs.length - 1]._id).then((res) => {
+                if (res.data.resblog.length === 0) {
+                    return this.setState(() => ({loading: false}))
+                }
+                this.props.ConcatBlogs(res.data.resblog)
                 document.addEventListener('scroll', this.trackScrolling)
             })
         }
