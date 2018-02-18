@@ -1,0 +1,32 @@
+.dashboard__divide-header {
+    display: flex;
+    flex-direction: column;
+    width:100%;
+    padding: $xl-size $s-size;
+    background: #3F51B5;
+}
+
+.dashboard__title {
+    font-size: $xl-size;
+    color: white;
+    font-weight: 800;
+    display: flex;
+    justify-content: center;
+}
+
+.dashboard__title-sub {
+    font-size: $l-size;
+    color: white;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+}
+
+.dashboard__title-desc {
+    font-size: $m-size;
+    color: white;
+    font-weight: 400;
+    display: flex;
+    justify-content: center;
+    margin-top: $m-size;
+}

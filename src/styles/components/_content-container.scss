@@ -4,3 +4,20 @@
     max-width: 80rem;
 
 }
+
+.content-container__page {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+}
+
+.content__divide {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
+

@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {Remove} from '../axios/blog';
-import Header from './header';
 import RemoveModal from './removeModal';
 import {startDispatchGetBlog, DispatchSetBlogs} from '../actions/blog';
 
@@ -40,7 +39,6 @@ class Blog extends React.Component {
     render() {
         return (
             <div>
-            <Header />
             {
                 this.props.blog ?
                 <div>

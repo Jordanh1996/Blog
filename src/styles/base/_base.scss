@@ -3,19 +3,22 @@
 }
 
 html {
-    font-size: 62.5%
+    font-size: 62.5%;
+    height: 100%;
 }
 
 
 body {
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: $m-size;
     color: $dark-grey;
     line-height: 1.6;
+    height: 100%;
 }
 
 button {
     cursor: pointer;
+    font-family: 'Roboto', sans-serif;
 }
 
 .is-active {

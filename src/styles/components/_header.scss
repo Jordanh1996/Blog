@@ -1,25 +1,47 @@
-.header {
-    background: $dark-blue;
 
-}
 
 .header__content {
     align-items: center;
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
-    padding: $s-size 0;
+    padding: 0 $s-size;
+    background: #283593;
+    flex: 0 0 auto;
 }
 
 .header__title {
     color: white;
     text-decoration: none;
-
-    h1 {
-        margin: 0;
+    font-weight: 800;
+    font-size: 5rem;
+    margin: 0;
+    transition: color .8s ease;
+    &:hover {
+        color: #F44336;
     }
 }
 
+.header__item {
+    color: white;
+    background: none;
+    border: none;
+    font-weight: 600;
+    font-size: 2.5rem;
+    text-decoration: none;
+    transition: color .8s ease;
+    &:hover {
+        color: #F44336;
+    }
+}
+
+.header__divide {
+    display: flex;
+    flex-direction: column;
+}
+
 .page-header {
+    flex: 0 0 auto;
     background: $off-white;
     margin-bottom: $l-size;
     padding: $l-size 0;

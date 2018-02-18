@@ -2,6 +2,7 @@ import React from 'react';
 import { Router, Route, Switch} from 'react-router-dom';
 import PrivateRoute from './privateRoute';
 import PublicRoute from './publicRoute';
+import StructuredRoute from './structuredRoute';
 import createHistory from 'history/createBrowserHistory';
 import Header from '../components/header';
 import Notfound from '../components/notfound';
@@ -20,14 +21,14 @@ const Website = () => (
     <Router history={history}>
         <div>
             <Switch>
-                <Route path="/" component={Dashboard} exact={true} />
+                <StructuredRoute path="/" component={Dashboard} exact={true} />
                 <PrivateRoute path="/addblog" component={AddBlog} />
-                <Route path="/blog/:id" component={Blog} exact={true} />
-                <Route path='/search' component={SearchBlogs} />
-                <Route path="/blog/edit/:id" component={EditBlog} />
+                <StructuredRoute path="/blog/:id" component={Blog} exact={true} />
+                <StructuredRoute path='/search' component={SearchBlogs} />
+                <StructuredRoute path="/blog/edit/:id" component={EditBlog} />
                 <PublicRoute path="/login" component={LoginPage} />
                 <PublicRoute path="/register" component={Register} />
-                <Route component={Notfound} />
+                <StructuredRoute component={Notfound} />
             </Switch>
         </div>
     </Router>

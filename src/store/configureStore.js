@@ -2,6 +2,7 @@ import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import {persistStore, persistReducer} from 'redux-persist';
 import localStorage from 'redux-persist/lib/storage';
 import BlogReducer from '../reducers/blog';
+import MyBlogsReducer from '../reducers/myblogs';
 import UserReducer from '../reducers/log';
 import thunk from 'redux-thunk';
 
@@ -16,6 +17,7 @@ export default () => {
     let store = createStore(
     combineReducers({
         blogs: BlogReducer,
+        myblogs: MyBlogsReducer,
         user: persistReducer(userPersistConfig, UserReducer)
     }),
     composeEnchancers(applyMiddleware(thunk))

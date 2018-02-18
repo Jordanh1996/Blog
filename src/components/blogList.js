@@ -22,7 +22,7 @@ class BlogList extends React.Component {
     }
 
     trackScrolling = () => {
-        if (this.isBottom(this.refs.bottom)) {
+        if (this.refs.bottom.getBoundingClientRect().bottom <= window.innerHeight) {
             this.setState(() => ({loading: true}))
             document.removeEventListener('scroll', this.trackScrolling)
             this.props.dispatchSetBlogs(2, this.props.blogs[this.props.blogs.length - 1]._id).then((res) => {
@@ -35,10 +35,6 @@ class BlogList extends React.Component {
         }
     };
 
-
-    isBottom(el) {
-        return el.getBoundingClientRect().bottom <= window.innerHeight;
-    }
 
     render() {
         return (
@@ -67,7 +63,7 @@ class BlogList extends React.Component {
                     :
                     <p></p>
                 }
-                <div className="bottom" id="bottom" ref="bottom">
+                <div className="bottom" ref="bottom">
 
                 </div>
             </div>

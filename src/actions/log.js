@@ -23,10 +23,6 @@ export const DispatchLogOut = () => ({
 
 export const startDispatchLogOut = (token) => {
     return (dispatch) => {
-        Logout(token)
-        .then(() => {
-            persistor.purge()
-            dispatch(DispatchLogOut())
-        })
+        return Logout(token)
     }
 }

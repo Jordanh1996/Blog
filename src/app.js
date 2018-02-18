@@ -10,6 +10,7 @@ import Website, {history} from './routers/appRouter';
 import 'react-dates/lib/css/_datepicker.css';
 import LoadingPage from './components/loadingPage';
 import configureStore from './store/configureStore';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 const store = configureStore()
 
@@ -18,7 +19,9 @@ export let persistor = persistStore(store)
 const jsx = (
     <Provider store={store}>
         <PersistGate loading={<LoadingPage />} persistor={persistor}>
-            <Website />
+            <MuiThemeProvider>
+                <Website />
+            </MuiThemeProvider>
         </PersistGate>
     </Provider>
 )

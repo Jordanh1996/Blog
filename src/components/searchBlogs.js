@@ -1,7 +1,6 @@
 import React from 'react';
 import {getBlogsByTitle, getBlogsByUsername} from '../axios/blog';
 import BlogItem from './blogitem';
-import Header from './header';
 import { setTimeout, clearTimeout } from 'timers';
 
 
@@ -48,7 +47,6 @@ class SearchBlogs extends React.Component {
     render() {
         return (
             <div>
-                <Header />
                 <button
                     onClick={this.onType}
                     disabled={this.state.selected === 'title'}

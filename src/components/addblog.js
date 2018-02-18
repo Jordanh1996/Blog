@@ -22,7 +22,6 @@ class AddBlog extends React.Component {
     render() {
         return (
             <div>
-                <Header />
                 <BlogForm 
                     onSubmit={this.onSubmit}
                 />

@@ -1,6 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Route, Link} from 'react-router-dom';
+
+import SideBar from '../components/sideBar';
 import Header from '../components/header';
 
 const PrivateRoute = ({
@@ -10,21 +12,24 @@ const PrivateRoute = ({
 }) => (
     <div>
         <Route {...rest} component={(props) => (
-            isAuthenticated ? (
-                <div>
-                    <Component {...props} />
-                </div>
-            ) : (
-                <div>
-                    <Header />
-                    <p>
-                        You need to log in to view this page, click <Link to='/login'>here</Link> to log in
-                    </p>
-                    <p>
-                        You don't have a user yet? click <Link to='/register'>here</Link> to register
-                    </p>
-                </div>
-            )
+            <div className="header__divide">
+            <Header />
+            <div className="content-container__page">
+                <SideBar />
+                {
+                    isAuthenticated ? 
+                    <Component {...props} /> :
+                    <div>
+                        <p>
+                            You need to log in to view this page, click <Link to='/login'>here</Link> to log in
+                        </p>
+                        <p>
+                            You don't have a user yet? click <Link to='/register'>here</Link> to register
+                        </p>
+                    </div>
+                }
+            </div>
+        </div>
         )}/>
     </div>
 )

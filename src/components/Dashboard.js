@@ -1,23 +1,23 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import Header from './header';
 import BlogList from './blogList';
+import SideBar from './sideBar';
 
 const Dashboard = (props) => (
-    <div>
-        <Header />
-        {
-            props.username && <p>Welcome back, {props.username}</p>
-        }
+    <div className="content__divide">
+        <div className="dashboard__divide-header">
+            <div className="dashboard__title">
+                Welcome
+            </div>
+            <div className="dashboard__title-sub">
+                Store and Share your Documents online
+            </div>
+            <div className="dashboard__title-desc">
+                Scroll down to browse the latest blogs
+            </div>
+        </div>
         <BlogList />
     </div>
 )
 
-const mapStateToProps = (state) => {
-    return {
-        blogs: state.blogs,
-        username: state.user.username
-    }
-}
-
-export default connect(mapStateToProps)(Dashboard)
+export default Dashboard;

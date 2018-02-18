@@ -1,60 +1,66 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {startDispatchLogOut} from '../actions/log';
+import {persistor} from '../app';
+import {startDispatchLogOut, DispatchLogOut} from '../actions/log';
+import {DispatchRemoveBlogs} from '../actions/myblogs';
 
 
 
 class Header extends React.Component {
 
     onSignOut = () => {
-        this.props.dispatchSignOut(this.props.token)
+        this.props.dispatchSignOut(this.props.token).then(() => {
+            this.props.dispatchRemoveMyBlogs()
+            persistor.purge()
+            this.props.dispatchLogout()
+        })
     }
 
     render() {
         return (
-            <header>
-                <div>
-                    <div>
-                        <Link to='/'>
-                            <h1>Home</h1>
+                    <div className="header__content">
+                        <Link to='/' className="header__title">
+                            Home
                         </Link>
                         
-                        <Link to='/search'>
+                        <Link to='/search' className="header__item">
                             Search Blogs
                         </Link>
 
                         {
                             this.props.token ? 
-                            <div>
-                                
-                                <button
-                                onClick={this.onSignOut}
-                                >
-                                    Log Out
+                            [
+                                <button onClick={this.onSignOut} className="header__item" key={1}>
+                                    Sign out
                                 </button>
-                            </div>
+                                ,
+                                <button onClick={this.onSignOut} className="header__item" key ={2}>
+                                    Profile
+                                </button>
+                            ]
                             :
-                            <div>
-                                <Link to='/login'>
-                                    <p>Log in</p>
+                            [
+                                <Link to='/login' className="header__item"
+                                key={1}>
+                                    <p>Sign in</p>
                                 </Link>
-
-                                <Link to='/register'>
-                                    Dont have a User yet? Register
+                                
+,
+                                <Link to='/register' className="header__item"
+                                key={2}>
+                                    Register
                                 </Link>
-                            </div>
+                            ]
                         }
 
 
         
         
-                        <Link to='/addblog'>
-                            <p>Add Blog</p>
+                        <Link to='/addblog' className="header__item">
+                            Add Blog
                         </Link>
                     </div>
-                </div>
-            </header>
         )
     }
 }
@@ -67,7 +73,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        dispatchSignOut: (token) => dispatch(startDispatchLogOut(token))
+        dispatchSignOut: (token) => dispatch(startDispatchLogOut(token)),
+        dispatchLogout: () => dispatch(DispatchLogOut()),
+        dispatchRemoveMyBlogs: () => dispatch(DispatchRemoveBlogs())
     }
 }
 
