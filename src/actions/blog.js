@@ -1,12 +1,10 @@
-import uuid from 'uuid';
 import {getBlogs, getBlogById, AddBlog, EditBlog} from '../axios/blog';
 
 export const DispatchAddBlog = (title, content) => ({
     type: "ADD_BLOG",
     blog: {
         title,
-        content,
-        id: uuid()
+        content
     }
 })
 

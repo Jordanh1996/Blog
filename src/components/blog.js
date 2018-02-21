@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import {Remove} from '../axios/blog';
 import RemoveModal from './removeModal';
 import {startDispatchGetBlog, DispatchSetBlogs} from '../actions/blog';
+import {DispatchRemoveBlog} from '../actions/myblogs';
 
 class Blog extends React.Component {
 
@@ -32,6 +33,7 @@ class Blog extends React.Component {
         this.closeModal()
         Remove(this.props.match.params.id, this.props.user.token)
         .then(() => {
+            this.props.dispatchRemoveBlog(this.props.blog.title)
             this.props.history.push('/')
         })
     }
@@ -86,7 +88,8 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         dispatchGetBlog: (id) => dispatch(startDispatchGetBlog(id)),
-        dispatchSetBlog: (blog) => dispatch(DispatchSetBlogs(blog))
+        dispatchSetBlog: (blog) => dispatch(DispatchSetBlogs(blog)),
+        dispatchRemoveBlog: (title) => dispatch(DispatchRemoveBlog(title))
     }
 }
 
