@@ -1,0 +1,15 @@
+.sign__title {
+    text-align: center;
+    color: #283593;
+    font-size: $xl-size;
+    font-weight: 600;
+    margin: $s-size 0;
+}
+
+.register__tip {
+    background: $grey;
+    width: fit-content;
+    padding: 5px;
+    border: 1px solid $dark-blue;
+    border-radius: 8px;
+}
