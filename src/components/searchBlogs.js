@@ -3,11 +3,15 @@ import {getBlogsByTitle, getBlogsByUsername} from '../axios/blog';
 import BlogItem from './blogitem';
 import { setTimeout, clearTimeout } from 'timers';
 
+import {Card, CardText} from 'material-ui/Card';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+
 
 class SearchBlogs extends React.Component {
 
     state = {
-        selected: 'title',
+        selected: 'Title',
         text: '',
         blogs: [],
         timeout: undefined,
@@ -15,16 +19,16 @@ class SearchBlogs extends React.Component {
     }
 
     onType = () => {
-        if (this.state.selected === 'title') {
-            return this.setState(() => ({selected: 'username'}))
+        if (this.state.selected === 'Title') {
+            return this.setState(() => ({selected: 'Username', text: ''}))
         }
-        this.setState(() => ({selected: 'title'}))
+        this.setState(() => ({selected: 'Title', text: ''}))
     }
     
     Check = (text) => {
-        if (this.state.selected === 'title') {
+        if (this.state.selected === 'Title') {
             return getBlogsByTitle(text)
-        } else if (this.state.selected === 'username') {
+        } else if (this.state.selected === 'Username') {
             return getBlogsByUsername(text)
         }
     }
@@ -46,36 +50,48 @@ class SearchBlogs extends React.Component {
 
     render() {
         return (
-            <div>
-                <button
-                    onClick={this.onType}
-                    disabled={this.state.selected === 'title'}
+            <div className="content__divide">
+                <Card
+                    style={{
+                        'margin': '1rem'
+                    }}
                 >
-                    By Title
-                </button>
+                    <CardText
+                        style={{
+                            'textAlign': 'center'
+                        }}
+                    >
+                        <p className="search__title">Search By {this.state.selected}</p>
+                        <RaisedButton
+                            onClick={this.onType}
+                            primary={true}
+                            label={'Toggle Search Method'}
+                        />
 
-                <button
-                    onClick={this.onType}
-                    disabled={this.state.selected === 'username'}
-                >
-                    By Username
-                </button>
+                        <br />
 
-                <input
-                    type="text"
-                    value={this.state.text}
-                    onChange={this.onText}
-                />
-                {
-                    this.state.loading ?
-                    <img className='image-register' src='/images/loader.gif' /> :
-                    <p></p>
-                }
+                        <TextField
+                            type="text"
+                            hintText={this.state.selected}
+                            floatingLabelText={this.state.selected}
+                            value={this.state.text}
+                            onChange={this.onText}
+                        />
+                        <br />
+                        {
+                            this.state.loading ?
+                            <img className='image-register' src='/images/loader.gif' /> :
+                            <p></p>
+                        }
+                    </CardText>
+                </Card>
+                
                 {
                     this.state.blogs.map((blog) => {
                         return <BlogItem
                             title={blog.title}
                             content={blog.content}
+                            creator={blog._creatorUser}
                             id={blog._id}
                             key={blog._id}
                         /> 
