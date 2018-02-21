@@ -20,6 +20,19 @@
     overflow-y: scroll;
 }
 
+.content__divide2 {
+    flex-direction: row
+}
+
+
+.content__divide::-webkit-scrollbar {
+	width: 9px;
+}
+
+.content__divide::-webkit-scrollbar-thumb {
+	background-color: #283593;
+}
+
 .content-container__bloglist {
     height: 10vh;
 }

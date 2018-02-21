@@ -1,9 +1,13 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {checkUsername, checkEmail, PostRegister} from '../axios/register';
-import {startDispatchLogIn} from '../actions/log';
+import {startDispatchLogIn, DispatchLogIn} from '../actions/log';
 import validator from 'validator';
 import { setTimeout, clearTimeout } from 'timers';
+
+import {Card, CardText} from 'material-ui/Card';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
  
 class Register extends React.Component {
     
@@ -106,79 +110,96 @@ class Register extends React.Component {
         }
         PostRegister(JSONbody)
         .then((res) => {
-            this.props.dispatchLogIn(this.state.username, this.state.password).then(() => {
-                this.props.history.push('/')
+            this.props.startDispatchLogIn(this.state.username, this.state.password).then((res) => {
+                this.props.dispatchLogIn(res.data.tokens[0].token, this.state.username).then(() => {
+                    this.props.history.push('/')
+                })
             })
         }).catch((e) => {
-            this.setState(() => ({error: true}))
+            this.setState(() => ({error: true, submit: false}))
         })
     }
 
     render () {
         return (
-            <div>
-                <p>Username : </p>
-                <input type="text"
-                value={this.state.username}
-                onChange={this.onUserChange}
-                autoFocus
+            <Card
+                style={{
+                    'margin': '2rem 1rem',
+                    'width': '100%',
+                    'height': 'fit-content'
+                }}
+            >
+            <CardText>
+                <p className="sign__title">Registration</p>
+                
+                <TextField
+                    hintText="Username"
+                    floatingLabelText="Username"
+                    type="text"
+                    value={this.state.username}
+                    onChange={this.onUserChange}
+                    errorText={!this.state.validusername && this.state.username.length > 5 ? "This user name is alredy taken" : ""}
                 />
                 {
-                    this.state.username.length < 6 ?
-                    <p>username must include at least 6 characters</p> :
-                    <p></p>
-                }
-                {
                     this.state.username === '' ?
-                    <p></p> :
+                    '' :
                     this.state.validusername === 'pending' ?
                     <img className='image-register' src='/images/loader.gif' /> :
                     this.state.validusername ? 
                     <img className='image-register' src='/images/check.png' /> :
                     <img className='image-register' src='/images/xmark.png' />
                 }
-
-                <p>Password : </p>
-                <input type="password"
-                value={this.state.password}
-                onChange={this.onPasswordChange}
-                />
                 {
-                    this.state.password.length < 6 ?
-                    <p>username must include at least 6 characters</p> :
-                    <p></p>
+                    <div className="register__tip">Username must include at least 6 characters</div>
                 }
+
+                <br />
+                <TextField
+                    hintText='Password'
+                    floatingLabelText='Password'
+                    type="password"
+                    value={this.state.password}
+                    onChange={this.onPasswordChange}
+                />
                 {   
                     this.state.password === '' ?
-                    <p></p> :
+                    '' :
                     this.state.validpassword ?
                     <img className='image-register' src="/images/check.png" /> :
                     <img className='image-register' src="/images/xmark.png" />
                 }
+                {
+                    <div className="register__tip">Password must include at least 6 characters</div>
+                }
 
-                <p>Confirm Password: </p>
-                <input type="password"
-                value={this.state.confirmPassword}
-                onChange={this.onConfirmPasswordChange}
+                <br />
+                <TextField
+                    hintText='Confirm Password'
+                    floatingLabelText="Confirm Password"
+                    type="password"
+                    value={this.state.confirmPassword}
+                    onChange={this.onConfirmPasswordChange}
                 />
                 {
                     this.state.confirmPassword === '' ?
-                    <p></p> :
+                    '' :
                     this.state.validConfirmPassword ?
                     <img className='image-register' src="/images/check.png" /> :
                     <img className='image-register' src="/images/xmark.png" />
                 }
-
-                <p>Email : </p>
-                <input type="text"
-                value={this.state.email}
-                onChange={this.onEmailChange}
-                />
                 {
-                    validator.isEmail(this.state.email) ?
-                    <p></p> :
-                    <p>Enter a valid email</p>
+                    <div className="register__tip">Re-enter Password</div>
                 }
+
+                <br />
+                <TextField
+                    hintText="Email"
+                    floatingLabelText="Email"
+                    type="text"
+                    value={this.state.email}
+                    onChange={this.onEmailChange}
+                    errorText={!this.state.validEmail && validator.isEmail(this.state.email) ? "This email is alredy taken" : ""}
+                />
                 {
                     this.state.email === '' ?
                     <p></p> :
@@ -188,25 +209,32 @@ class Register extends React.Component {
                     <img className='image-register' src='/images/check.png' /> :
                     <img className='image-register' src='/images/xmark.png' />
                 }
+                {
+                    <div className="register__tip">Enter a valid email</div>
+                }
 
-                <button 
+                <br />
+                <RaisedButton
                 onClick={this.onRegister}
                 disabled={!(this.state.validEmail && this.state.validusername && this.state.validpassword && 
                     this.state.validConfirmPassword && this.state.validEmail !== 'pending' && this.state.validusername !== 'pending')}
-                >
-                    Submit
-                </button>
-                {
-                    (<img className='image-register' src='/images/loader.gif' /> && this.state.submit)
+                primary={true}
+                label={"Submit"}
+                />
+                {   this.state.submit ?
+                    <img className='image-register' src='/images/loader.gif' /> :
+                    ''
                 }
-            </div>
+            </CardText>
+            </Card>
         )
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        dispatchLogIn: (username, password) => dispatch(startDispatchLogIn(username, password))
+        startDispatchLogIn: (username, password) => dispatch(startDispatchLogIn(username, password)),
+        dispatchLogIn: (token, username) => dispatch(DispatchLogIn(token, username))
     }
 }
 

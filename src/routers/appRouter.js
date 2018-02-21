@@ -9,8 +9,7 @@ import Notfound from '../components/notfound';
 import Dashboard from '../components/Dashboard';
 import AddBlog from '../components/addblog';
 import Blog from '../components/blog';
-import LoginPage from '../components/loginpage';
-import Register from '../components/register';
+import Sign from '../components/sign';
 import EditBlog from '../components/editblog';
 import SearchBlogs from '../components/searchBlogs';
 
@@ -26,8 +25,8 @@ const Website = () => (
                 <StructuredRoute path="/blog/:id" component={Blog} exact={true} />
                 <StructuredRoute path='/search' component={SearchBlogs} />
                 <StructuredRoute path="/blog/edit/:id" component={EditBlog} />
-                <PublicRoute path="/login" component={LoginPage} />
-                <PublicRoute path="/register" component={Register} />
+                <PublicRoute path="/sign" component={Sign} />
+                <PublicRoute path="/sign" component={Sign} />
                 <StructuredRoute component={Notfound} />
             </Switch>
         </div>

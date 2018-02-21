@@ -41,13 +41,13 @@ class Header extends React.Component {
                             ]
                             :
                             [
-                                <Link to='/login' className="header__item"
+                                <Link to='/sign' className="header__item"
                                 key={1}>
                                     <p>Sign in</p>
                                 </Link>
                                 
 ,
-                                <Link to='/register' className="header__item"
+                                <Link to='/sign' className="header__item"
                                 key={2}>
                                     Register
                                 </Link>

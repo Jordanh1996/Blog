@@ -48,6 +48,7 @@ class SideBar extends React.Component {
           'height': '90vh',
           'width': '20rem'
         }}
+        className="sidebar"
       >
         <ListItem 
           primaryText="Add Blog" 
