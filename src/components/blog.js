@@ -45,7 +45,7 @@ class Blog extends React.Component {
                     {this.props.blog._creatorUser} : 
                     {this.props.blog.title}
                         
-                    {this.props.blog.content}
+                    <pre>{this.props.blog.content}</pre>
                     {
                         this.props.blog._creatorUser === this.props.user.username ?
                         <div>

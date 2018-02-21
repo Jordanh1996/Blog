@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import Waypoint from 'react-waypoint';
 import BlogItem from './blogitem';
 import {startDispatchSetBlogs, DispatchSetBlogs, DispatchConcatBlogs} from '../actions/blog';
 
@@ -11,45 +12,37 @@ class BlogList extends React.Component {
     }
 
     componentDidMount() {
-        this.props.dispatchSetBlogs(2).then((res) => {
+        this.props.dispatchSetBlogs(5).then((res) => {
             this.props.SetBlogs(res.data.resblog)
-            document.addEventListener('scroll', this.trackScrolling);
+            this.setState(() => ({loading: false}))
         })
     }
 
-    componentWillUnmount() {
-        document.removeEventListener('scroll', this.trackScrolling)
-    }
-
-    trackScrolling = () => {
-        if (this.refs.bottom.getBoundingClientRect().bottom <= window.innerHeight) {
+    bottom = () => {
+        if (!this.state.loading) {
             this.setState(() => ({loading: true}))
-            document.removeEventListener('scroll', this.trackScrolling)
-            this.props.dispatchSetBlogs(2, this.props.blogs[this.props.blogs.length - 1]._id).then((res) => {
-                if (res.data.resblog.length === 0) {
-                    return this.setState(() => ({loading: false}))
+            this.props.dispatchSetBlogs(5, this.props.blogs[this.props.blogs.length - 1]._id)
+            .then((res) => {
+                if (res.data.resblog.length > 0) {
+                    this.props.ConcatBlogs(res.data.resblog)
                 }
-                this.props.ConcatBlogs(res.data.resblog)
-                document.addEventListener('scroll', this.trackScrolling)
+                this.setState(() => ({loading: false}))
             })
         }
-    };
+
+    }
 
 
     render() {
         return (
-            <div>
+            <div className="content-container__bloglist">
                 {
-                    this.props.blogs.length === 0 ? 
-                    <div>
-                        Loading Blogs...
-                        <img className='image-register' src='/images/loader.gif' />
-                    </div>
-                    :
+                    
                     this.props.blogs.map((blog) => {
                     return <BlogItem
                         title={blog.title}
                         content={blog.content}
+                        creator={blog._creatorUser}
                         id={blog._id}
                         key={blog._id}
                     />
@@ -58,11 +51,14 @@ class BlogList extends React.Component {
                     this.state.loading ?
                     <div>
                         Loading Blogs...
-                        <img className='image-register' src='/images/loader.gif' />
+                        <img className='loader__image' src='/images/loader.gif' />
                     </div>
                     :
                     <p></p>
                 }
+                <Waypoint
+                    onEnter={this.bottom}
+                />
                 <div className="bottom" ref="bottom">
 
                 </div>

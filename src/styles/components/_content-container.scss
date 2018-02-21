@@ -9,15 +9,24 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    width: 100%;
-    height: 100%;
 }
 
 .content__divide {
     display: flex;
     flex-direction: column;
+    flex: 1 1 auto;
+    position: relative;
     width: 100%;
-    height: 100%;
-    overflow-y: auto;
+    overflow-y: scroll;
 }
 
+.content-container__bloglist {
+    height: 10vh;
+}
+
+.content-container__sidebar {
+    overflow-y: auto;
+    height: 100vh;
+    flex: 1 1 auto;
+    position: relative;
+}

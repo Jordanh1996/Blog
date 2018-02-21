@@ -11,7 +11,7 @@ const StructuredRoute = ({
             <div className="header__divide">
                 <Header />
                 <div className="content-container__page">
-                    <SideBar /> 
+                        <SideBar /> 
                     <Component {...props} />
                 </div>
                 

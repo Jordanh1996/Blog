@@ -40,46 +40,62 @@ class SideBar extends React.Component {
 
   render() {
     return (
-      <div>
-        <div>
-          <List>
-            <ListItem 
-              primaryText="Add Blog" 
-              leftIcon={<ContentSend />} 
-              containerElement={<Link to={`/addblog`} />}  
-            />
-            <ListItem primaryText="Drafts" leftIcon={<ContentDrafts />} />
-            {
-                this.state.loading ?
+      <List
+        style={{
+          "background": 'white',
+          'overflowY': 'scroll',
+          'overflowX': 'hidden',
+          'height': '90vh',
+          'width': '20rem'
+        }}
+      >
+        <ListItem 
+          primaryText="Add Blog" 
+          leftIcon={<ContentSend />} 
+          containerElement={<Link to={`/addblog`} />}  
+        />
+        <ListItem primaryText="Drafts" leftIcon={<ContentDrafts />} />
+        {
+            this.state.loading ?
+            <ListItem
+              primaryText="My Blogs"
+              leftIcon={<ContentInbox />}
+              initiallyOpen={true}
+              primaryTogglesNestedList={true} 
+              
+              nestedItems={[
                 <ListItem
-                primaryText="Loading..."
-                leftIcon={<ContentInbox />}
-                initiallyOpen={true}
-                primaryTogglesNestedList={true} />
-                
-                :
+                  key={1}
+                  primaryText="Loading..."
+                />
+              ]}
+            />
+            :
 
-                <ListItem
-                  primaryText={"My Blogs"}
-                  leftIcon={<ContentInbox />}
-                  initiallyOpen={true}
-                  primaryTogglesNestedList={true}
-                  nestedItems={
-                    this.props.blogs.map((blog) => {
-                      return <ListItem 
-                        key={blog._id}
-                        primaryText={blog.title}
-                        containerElement={<Link to={`/blog/${blog._id}`} />}
-                        hoverColor={'#90CAF9'}
-                        />
-                    })
-                }
-            />
+            <ListItem
+              primaryText={"My Blogs"}
+              leftIcon={<ContentInbox />}
+              initiallyOpen={true}
+              primaryTogglesNestedList={true}
+              
+              nestedItems={
+                this.props.blogs.map((blog) => {
+                  return <ListItem 
+                    key={blog._id}
+                    primaryText={blog.title}
+                    containerElement={<Link to={`/blog/${blog._id}`} />}
+                    hoverColor={'#90CAF9'}
+                    style={{
+                      'height': '8vh',
+                      'workBreak': 'break-all'
+                    }}
+                    />
+                })
             }
-            
-          </List>
-        </div>
-      </div>
+        />
+        }
+        
+      </List>
     );
   }
 }

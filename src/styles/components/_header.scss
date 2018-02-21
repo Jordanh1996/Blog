@@ -8,6 +8,7 @@
     padding: 0 $s-size;
     background: #283593;
     flex: 0 0 auto;
+    height: 10vh
 }
 
 .header__title {
@@ -38,6 +39,7 @@
 .header__divide {
     display: flex;
     flex-direction: column;
+    height: 100vh;
 }
 
 .page-header {
