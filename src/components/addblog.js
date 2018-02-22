@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import BlogForm from './blogForm';
 import Header from './header';
-import {startDispatchAddBlog} from '../actions/blog';
+import {addBlog} from '../axios/blog';
 import {DispatchAddBlog} from '../actions/myblogs';
 
 
@@ -13,7 +13,7 @@ class AddBlog extends React.Component {
     }
 
     onSubmit = (token, title, content) => {
-        this.props.onSubmit(token, title, content).then(() => {
+        addBlog(token, title, content).then(() => {
             this.props.dispatchAddBlog(title, content)
             this.props.history.push('/')
             }).catch(() => {
@@ -35,7 +35,6 @@ class AddBlog extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onSubmit: (token, title, content) => dispatch(startDispatchAddBlog(token, title, content)),
         dispatchAddBlog: (title, content) => dispatch(DispatchAddBlog(title, content))
     }
 }

@@ -32,7 +32,7 @@ export const getBlogById = (id) => {
     })
 }
 
-export const AddBlog = (token, title, content) => {
+export const addBlog = (token, title, content) => {
     return axios({
         method: "post",
         url: 'https://blogserver-jordan.herokuapp.com/blog',

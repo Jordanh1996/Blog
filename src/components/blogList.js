@@ -2,8 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Waypoint from 'react-waypoint';
 import BlogItem from './blogitem';
-import {startDispatchSetBlogs, DispatchSetBlogs, DispatchConcatBlogs} from '../actions/blog';
-
+import {DispatchSetBlogs, DispatchConcatBlogs} from '../actions/blog';
+import {getBlogs} from '../axios/blog';
 
 class BlogList extends React.Component {
 
@@ -12,7 +12,7 @@ class BlogList extends React.Component {
     }
 
     componentDidMount() {
-        this.props.dispatchSetBlogs(5).then((res) => {
+        getBlogs(5).then((res) => {
             this.props.SetBlogs(res.data.resblog)
             this.setState(() => ({loading: false}))
         })
@@ -21,7 +21,7 @@ class BlogList extends React.Component {
     bottom = () => {
         if (!this.state.loading) {
             this.setState(() => ({loading: true}))
-            this.props.dispatchSetBlogs(5, this.props.blogs[this.props.blogs.length - 1]._id)
+            getBlogs(5, this.props.blogs[this.props.blogs.length - 1]._id)
             .then((res) => {
                 if (res.data.resblog.length > 0) {
                     this.props.ConcatBlogs(res.data.resblog)
@@ -75,7 +75,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        dispatchSetBlogs: (amount, end) => dispatch(startDispatchSetBlogs(amount, end)),
         SetBlogs: (blogs) => dispatch(DispatchSetBlogs(blogs)),
         ConcatBlogs: (blogs) => dispatch(DispatchConcatBlogs(blogs))
     }

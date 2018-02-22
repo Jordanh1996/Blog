@@ -2,7 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 import BlogForm from './blogForm';
-import {startDispatchEditBlog, DispatchEditBlog} from '../actions/blog';
+import {DispatchEditBlog} from '../actions/blog';
+import {EditBlog} from '../axios/blog';
 import {DispatchEditMyBlog} from '../actions/myblogs';
 
 class EditPage extends React.Component {
@@ -13,7 +14,7 @@ class EditPage extends React.Component {
     }
 
     onSubmit = (token, title, content) => {
-        this.props.startdispatchEditBlog(token, this.props.match.params.id, title, content).then(() => {
+        EditBlog(token, this.props.match.params.id, title, content).then(() => {
             this.props.dispatchEditBlog(this.props.match.params.id, title, content)
             this.props.dispatchEditMyBlog(this.props.match.params.id, title, content)
             this.setState(() => ({redirect: true}))
@@ -52,7 +53,6 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        startdispatchEditBlog: (token, id, title, content) => dispatch(startDispatchEditBlog(token, id, title, content)),
         dispatchEditBlog: (id, title, content) => dispatch(DispatchEditBlog(id, title, content)),
         dispatchEditMyBlog: (id, title, content) => dispatch(DispatchEditMyBlog(id, title, content))
     }

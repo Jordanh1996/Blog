@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const Login = (username, password) => {
+export const login = (username, password) => {
     return axios({
         method: 'post',
         url: 'https://blogserver-jordan.herokuapp.com/log/in',
@@ -11,7 +11,7 @@ export const Login = (username, password) => {
     })
 }
 
-export const Logout = (token) => {
+export const logout = (token) => {
     return axios({
         method: 'delete',
         url: 'https://blogserver-jordan.herokuapp.com/log/out',

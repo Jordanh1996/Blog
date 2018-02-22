@@ -2,7 +2,8 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {persistor} from '../app';
-import {startDispatchLogOut, DispatchLogOut} from '../actions/log';
+import {DispatchLogOut} from '../actions/log';
+import {logout} from '../axios/log';
 import {DispatchRemoveBlogs} from '../actions/myblogs';
 
 
@@ -10,7 +11,7 @@ import {DispatchRemoveBlogs} from '../actions/myblogs';
 class Header extends React.Component {
 
     onSignOut = () => {
-        this.props.dispatchSignOut(this.props.token).then(() => {
+        logout(this.props.token).then(() => {
             this.props.dispatchRemoveMyBlogs()
             persistor.purge()
             this.props.dispatchLogout()
@@ -73,7 +74,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        dispatchSignOut: (token) => dispatch(startDispatchLogOut(token)),
         dispatchLogout: () => dispatch(DispatchLogOut()),
         dispatchRemoveMyBlogs: () => dispatch(DispatchRemoveBlogs())
     }

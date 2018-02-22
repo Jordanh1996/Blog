@@ -3,8 +3,12 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {Remove} from '../axios/blog';
 import RemoveModal from './removeModal';
-import {startDispatchGetBlog, DispatchSetBlogs} from '../actions/blog';
+import {DispatchSetBlogs} from '../actions/blog';
+import {getBlogById} from '../axios/blog';
 import {DispatchRemoveBlog} from '../actions/myblogs';
+
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class Blog extends React.Component {
 
@@ -15,7 +19,7 @@ class Blog extends React.Component {
 
     componentWillMount() {
         if (!this.props.blog) {
-            this.props.dispatchGetBlog(this.props.match.params.id).then((res) => {
+            getBlogById(this.props.match.params.id).then((res) => {
                 this.props.dispatchSetBlog([res.data.resblog])
             })
         }
@@ -40,40 +44,61 @@ class Blog extends React.Component {
 
     render() {
         return (
-            <div>
-            {
-                this.props.blog ?
-                <div>
-                    {this.props.blog._creatorUser} : 
-                    {this.props.blog.title}
-                        
-                    <pre>{this.props.blog.content}</pre>
-                    {
-                        this.props.blog._creatorUser === this.props.user.username ?
-                        <div>
-                            <Link to={`edit/${this.props.blog._id}`}>
-                                Edit
-                            </Link>
-                            <button onClick={this.openModal}>
-                                Remove
-                            </button>
-                            <RemoveModal
-                                isopen={this.state.modalopen}
-                                isclose={this.closeModal}
-                                confirmRemove={this.confirmRemove}
-                            />
-                        </div>
-                        : <p></p>
-                    }
-                </div>
-                :
-                <img className='image-register' src='/images/loader.gif' />
-            }
+            <div className="content__divide">
+                {
+                    this.props.blog ?
+                    <Card
+                        style={{
+                            'margin': '1rem'
+                        }}
+                    >
+                    <CardHeader
+                        title={this.props.blog.title}
+                        titleStyle={{
+                            'fontSize': '3.6rem',
+                            'wordBreak': 'break-all'
+                        }}
+                        subtitle={`Created by ${this.props.blog._creatorUser}`}
+                    />
 
+                    <CardText
+                        style={{
+                            'wordBreak': 'break-all'
+                        }}
+                    >
+                        <p className="blog__content">{this.props.blog.content}</p>
+                    </CardText>
+
+                    <CardActions>
+                        {
+                            this.props.blog._creatorUser === this.props.user.username ?
+                                <div>
+                                    <RaisedButton
+                                        label="Edit"
+                                        primary={true}
+                                        containerElement={<Link to={`edit/${this.props.blog._id}`}></Link>}
+                                    />
+                                    
+                                    <RaisedButton
+                                        label="Remove"
+                                        secondary={true}
+                                        onClick={this.confirmRemove}
+                                        style={{
+                                            'marginLeft': '1rem'
+                                        }}
+                                    />
+                                </div>
+                        : ''
+                        }
+                    </CardActions>
+                </Card> :
+                <img className='image-register' src='/images/loader.gif' />
+                }
             </div>
         )
     }
 }
+
     
 
 
@@ -87,7 +112,6 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        dispatchGetBlog: (id) => dispatch(startDispatchGetBlog(id)),
         dispatchSetBlog: (blog) => dispatch(DispatchSetBlogs(blog)),
         dispatchRemoveBlog: (title) => dispatch(DispatchRemoveBlog(title))
     }

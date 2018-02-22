@@ -1,10 +1,10 @@
 import React from 'react';
 import {List, ListItem} from 'material-ui/List';
-import ActionGrade from 'material-ui/svg-icons/action/grade';
 import ContentInbox from 'material-ui/svg-icons/content/inbox';
 import ContentDrafts from 'material-ui/svg-icons/content/drafts';
 import ContentSend from 'material-ui/svg-icons/content/send';
 import Toggle from 'material-ui/Toggle';
+import TextField from 'material-ui/TextField';
 
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
@@ -26,10 +26,6 @@ class SideBar extends React.Component {
             this.setState(() => ({loading: false}))
         })
     }
-  }
-
-  onBlog = (e) => {
-    console.log(e.target)
   }
 
   handleNestedListToggle = (item) => {
@@ -55,7 +51,6 @@ class SideBar extends React.Component {
           leftIcon={<ContentSend />} 
           containerElement={<Link to={`/addblog`} />}  
         />
-        <ListItem primaryText="Drafts" leftIcon={<ContentDrafts />} />
         {
             this.state.loading ?
             <ListItem

@@ -8,12 +8,6 @@ export const DispatchAddBlog = (title, content) => ({
     }
 })
 
-export const startDispatchAddBlog = (token, title, content) => {
-    return (dispatch) => {
-        return AddBlog(token, title, content)
-    }
-}
-
 export const DispatchRemoveBlog = (title) => ({
     type: "REMOVE_BLOG",
     title
@@ -29,27 +23,9 @@ export const DispatchConcatBlogs = (blogs) => ({
     blogs
 })
 
-export const startDispatchSetBlogs = (amount, last) => {
-    return (dispatch) => {
-        return getBlogs(amount, last)
-    }
-}
-
-export const startDispatchGetBlog = (id) => {
-    return (dispatch) => {
-        return getBlogById(id)
-    }
-}
-
 export const DispatchEditBlog = (id, title, content) => ({
     type: "EDIT_BLOG",
     id,
     title,
     content
 })
-
-export const startDispatchEditBlog = (token, id, title, content) => {
-    return (dispatch) => {
-        return EditBlog(token, id, title, content)
-    }
-}

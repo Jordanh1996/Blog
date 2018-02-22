@@ -1,7 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {checkUsername, checkEmail, PostRegister} from '../axios/register';
-import {startDispatchLogIn, DispatchLogIn} from '../actions/log';
+import {DispatchLogIn} from '../actions/log';
+import {login} from '../axios/log';
 import validator from 'validator';
 import { setTimeout, clearTimeout } from 'timers';
 
@@ -110,7 +111,7 @@ class Register extends React.Component {
         }
         PostRegister(JSONbody)
         .then((res) => {
-            this.props.startDispatchLogIn(this.state.username, this.state.password).then((res) => {
+            login(this.state.username, this.state.password).then((res) => {
                 this.props.dispatchLogIn(res.data.tokens[0].token, this.state.username).then(() => {
                     this.props.history.push('/')
                 })
@@ -233,7 +234,6 @@ class Register extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        startDispatchLogIn: (username, password) => dispatch(startDispatchLogIn(username, password)),
         dispatchLogIn: (token, username) => dispatch(DispatchLogIn(token, username))
     }
 }

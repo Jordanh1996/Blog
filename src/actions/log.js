@@ -11,18 +11,6 @@ export const DispatchLogIn = (token, username) => ({
     }
 })
 
-export const startDispatchLogIn = (username, password) => {
-    return (dispatch) => {
-        return Login(username, password)
-    }
-}
-
 export const DispatchLogOut = () => ({
     type: "LOG_OUT"
 })
-
-export const startDispatchLogOut = (token) => {
-    return (dispatch) => {
-        return Logout(token)
-    }
-}

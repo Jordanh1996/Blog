@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {startDispatchLogIn, DispatchLogIn} from '../actions/log';
+import {DispatchLogIn} from '../actions/log';
+import {login} from '../axios/log';
 
 import {Card, CardText} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
@@ -30,7 +31,7 @@ class Login extends React.Component {
 
     onLogin = () => {
         this.setState(() => ({loadgif: 'gif'}))
-        this.props.startDispatchLogin(this.state.username, this.state.password).then((res) => {
+        login(this.state.username, this.state.password).then((res) => {
             this.props.DispatchLogin(res.data.tokens[0].token, this.state.username)
             this.props.history.push('/')
         }).catch(() => {
@@ -87,7 +88,6 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        startDispatchLogin: (username, password) => dispatch(startDispatchLogIn(username, password)),
         DispatchLogin: (token, username) => dispatch(DispatchLogIn(token, username))
     }
 }
