@@ -5,6 +5,9 @@ import Header from './header';
 import {addBlog} from '../axios/blog';
 import {DispatchAddBlog} from '../actions/myblogs';
 
+import {Card, CardText} from 'material-ui/Card';
+import RaisedButton from 'material-ui/RaisedButton';
+
 
 class AddBlog extends React.Component {
 
@@ -23,11 +26,11 @@ class AddBlog extends React.Component {
 
     render() {
         return (
-            <div>
-                <BlogForm 
-                    onSubmit={this.onSubmit}
-                />
-                {this.state.error && <p>there was an error posting your blog</p>}
+            <div className="content__divide">
+                    <BlogForm 
+                        onSubmit={this.onSubmit}
+                    />
+                        {this.state.error && <p>there was an error posting your blog</p>}
             </div>
         )
     }

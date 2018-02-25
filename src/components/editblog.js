@@ -25,7 +25,7 @@ class EditPage extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="content__divide">
                 <BlogForm
                     blog={this.props.blog}
                     onSubmit={this.onSubmit}

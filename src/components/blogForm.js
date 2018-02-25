@@ -2,6 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
 
+import TextField from 'material-ui/TextField';
+import {Card, CardText} from 'material-ui/Card';
+import RaisedButton from 'material-ui/RaisedButton';
+
 class BlogForm extends React.Component {
 
     constructor(props) {
@@ -31,24 +35,45 @@ class BlogForm extends React.Component {
 
     render () {
         return (
-            <div>
-                    <p>title :</p>
-                    <textarea 
-                    autoFocus
-                    value={this.state.title}
-                    onChange={this.onTitleChange}
+            <Card
+                style={{
+                    'margin': '1rem'
+                }}
+            >
+                <CardText
+                style={{
+                    'display': 'flex',
+                    'flexDirection': 'column'
+                }}
+                >
+                    <TextField
+                        hintText="Title"
+                        floatingLabelText="Title"
+                        value={this.state.title}
+                        onChange={this.onTitleChange}
+                        style={{
+                            'width': '100%'
+                        }}
+                    />
+                    <TextField
+                        hintText="Content"
+                        floatingLabelText="Content"
+                        value={this.state.content}
+                        onChange={this.onContentChange}
+                        multiLine={true}
+                        rows={12}
+                        style={{
+                            'width': '100%'
+                        }}
                     />
 
-                    <p>content: </p>
-                    <textarea 
-                    value={this.state.content}
-                    onChange={this.onContentChange}
+                    <RaisedButton 
+                        onClick={this.onSubmit} disabled={this.state.disable} 
+                        label='Submit'
+                        primary={true}
                     />
-
-                    <button onClick={this.onSubmit} disabled={this.state.disable}>
-                        submit
-                    </button>
-            </div>
+                </CardText>
+            </Card>
         )
     }
 }
