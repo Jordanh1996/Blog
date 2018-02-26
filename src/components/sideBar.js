@@ -82,7 +82,6 @@ class SideBar extends React.Component {
                     containerElement={<Link to={`/blog/${blog._id}`} />}
                     hoverColor={'#90CAF9'}
                     style={{
-                      'height': '8vh',
                       'workBreak': 'break-all'
                     }}
                     />
