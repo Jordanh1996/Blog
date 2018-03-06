@@ -37,7 +37,7 @@ class Blog extends React.Component {
         this.closeModal()
         Remove(this.props.match.params.id, this.props.user.token)
         .then(() => {
-            this.props.dispatchRemoveBlog(this.props.blog.title)
+            this.props.dispatchRemoveBlog(this.props.blog._id)
             this.props.history.push('/')
         })
     }
@@ -113,7 +113,7 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         dispatchSetBlog: (blog) => dispatch(DispatchSetBlogs(blog)),
-        dispatchRemoveBlog: (title) => dispatch(DispatchRemoveBlog(title))
+        dispatchRemoveBlog: (id) => dispatch(DispatchRemoveBlog(id))
     }
 }
 

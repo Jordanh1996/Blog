@@ -10,7 +10,7 @@ export default (state = [], action) => {
             return []
 
         case "REMOVE_MY_BLOG":
-            return state.filter((blog) => blog.title !== action.title)
+            return state.filter((blog) => blog._id !== action.id)
 
         case "ADD_MY_BLOGS":
             return [

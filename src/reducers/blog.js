@@ -9,7 +9,7 @@ export default (state = [], action) => {
             ]
 
         case "REMOVE_BLOG":
-            return state.filter((blog) => blog.title !== action.title)
+            return state.filter((blog) => blog._id !== action.id)
 
         case "EDIT_BLOG":
             return state.map((blog) => {

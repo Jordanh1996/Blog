@@ -16,8 +16,8 @@ class AddBlog extends React.Component {
     }
 
     onSubmit = (token, title, content) => {
-        addBlog(token, title, content).then(() => {
-            this.props.dispatchAddBlog(title, content)
+        addBlog(token, title, content).then((res) => {
+            this.props.dispatchAddBlog(title, content, res.data._id)
             this.props.history.push('/')
             }).catch(() => {
                 this.setState(() => ({error: true}))
@@ -38,7 +38,7 @@ class AddBlog extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        dispatchAddBlog: (title, content) => dispatch(DispatchAddBlog(title, content))
+        dispatchAddBlog: (title, content, id) => dispatch(DispatchAddBlog(title, content, id))
     }
 }
 

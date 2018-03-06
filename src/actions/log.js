@@ -1,7 +1,3 @@
-import axios from 'axios';
-import {persistor} from '../app';
-import {Login, Logout} from '../axios/log';
-
 
 export const DispatchLogIn = (token, username) => ({
     type: "LOG_IN",

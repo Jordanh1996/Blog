@@ -11,9 +11,9 @@ import {DispatchRemoveBlogs} from '../actions/myblogs';
 class Header extends React.Component {
 
     onSignOut = () => {
+        persistor.purge()
         logout(this.props.token).then(() => {
             this.props.dispatchRemoveMyBlogs()
-            persistor.purge()
             this.props.dispatchLogout()
         })
     }

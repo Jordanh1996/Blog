@@ -1,3 +1,5 @@
+import uuid from 'uuid';
+
 export const DispatchSetBlogs = (blogs) => ({
     type: "SET_MY_BLOGS",
     blogs
@@ -7,16 +9,17 @@ export const DispatchRemoveBlogs = () => ({
     type: "REMOVE_MY_BLOGS"
 })
 
-export const DispatchRemoveBlog = (title) => ({
+export const DispatchRemoveBlog = (id) => ({
     type: "REMOVE_MY_BLOG",
-    title
+    id
 })
 
-export const DispatchAddBlog = (title, content) => ({
+export const DispatchAddBlog = (title, content, _id) => ({
     type: "ADD_MY_BLOGS",
     blog: {
         title,
-        content
+        content,
+        _id
     }
 })
 
