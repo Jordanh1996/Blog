@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
+import moment from 'moment';
 import {Remove} from '../axios/blog';
 import RemoveModal from './removeModal';
 import {DispatchSetBlogs} from '../actions/blog';
@@ -58,7 +59,11 @@ class Blog extends React.Component {
                             'fontSize': '3.6rem',
                             'wordBreak': 'break-all'
                         }}
-                        subtitle={`Created by ${this.props.blog._creatorUser}`}
+                        subtitle={`Posted by ${this.props.blog._creatorUser}, ` + 
+                        (moment().unix() * 1000 - this.props.blog._createdAt > 2246400000 ?
+                            `${moment(this.props.blog._createdAt).format('MMMM Do YYYY')}` :
+                            `${moment(this.props.blog._createdAt).fromNow()}`)
+                        }
                     />
 
                     <CardText
