@@ -72,6 +72,13 @@ class Blog extends React.Component {
                         }}
                     >
                         <p className="blog__content">{this.props.blog.content}</p>
+                        {
+                            this.props.blog.editTime ?
+                            <p className='blog__edited'>Last Edited : {(moment().unix() * 1000 - this.props.blog.editTime > 2246400000 ?
+                            `${moment(this.props.blog.editTime).format('MMMM Do YYYY')}` :
+                            `${moment(this.props.blog.editTime).fromNow()}`)}</p> :
+                            ''
+                        }
                     </CardText>
 
                     <CardActions>

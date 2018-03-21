@@ -44,6 +44,7 @@ class BlogList extends React.Component {
                         content={blog.content}
                         creator={blog._creatorUser}
                         createdAt={blog._createdAt}
+                        editTime={blog.editTime}
                         id={blog._id}
                         key={blog._id}
                     />
