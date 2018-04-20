@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import BlogList from './blogList';
+import { startDispatchSetBlogs } from '../actions/blog';
 
-const Dashboard = () => (
+const Dashboard = (props) => (
     <div className="content__divide">
         <div className="dashboard__divide-header">
             <div className="dashboard__title">
@@ -14,8 +16,19 @@ const Dashboard = () => (
                 Scroll down to browse the latest blogs
             </div>
         </div>
-        <BlogList />
+        <BlogList 
+            getBlogs={props.getBlogs}
+            blogs={props.blogs}
+        />
     </div>
 );
 
-export default Dashboard;
+const mapStateToProps = (state) => ({
+    blogs: state.blogs
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    getBlogs: (blogs) => dispatch(startDispatchSetBlogs(blogs))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

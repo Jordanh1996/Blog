@@ -1,31 +1,23 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import Waypoint from 'react-waypoint';
 import BlogItem from './blogitem';
-import { DispatchSetBlogs, DispatchConcatBlogs } from '../actions/blog';
-import { getBlogs } from '../axios/blog';
 
 class BlogList extends React.Component {
 
     state = {
-        loading: false
+        loading: true
     }
 
     componentDidMount() {
-        getBlogs(10).then((res) => {
-            this.props.SetBlogs(res.data.resblog);
+        this.props.getBlogs().then((res) => {
             this.setState(() => ({ loading: false }));
         });
     }
 
     bottom = () => {
-        if (!this.state.loading && this.props.blogs.length > 0) {
+        if (this.props.blogs.length > 0 && !this.state.loading) {
             this.setState(() => ({ loading: true }));
-            getBlogs(5, this.props.blogs[this.props.blogs.length - 1]._id)
-            .then((res) => {
-                if (res.data.resblog.length > 0) {
-                    this.props.ConcatBlogs(res.data.resblog);
-                }
+            this.props.getBlogs(this.props.blogs).then(() => {
                 this.setState(() => ({ loading: false }));
             });
         }
@@ -66,17 +58,4 @@ class BlogList extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        blogs: state.blogs
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        SetBlogs: (blogs) => dispatch(DispatchSetBlogs(blogs)),
-        ConcatBlogs: (blogs) => dispatch(DispatchConcatBlogs(blogs))
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(BlogList);
+export default BlogList;
