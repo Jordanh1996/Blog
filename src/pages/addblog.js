@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import BlogForm from './blogForm';
+import BlogForm from '../components/blogForm';
 import { addBlog } from '../axios/blog';
 import { DispatchAddBlog } from '../actions/myblogs';
 

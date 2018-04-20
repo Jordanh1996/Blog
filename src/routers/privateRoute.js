@@ -23,7 +23,7 @@ const PrivateRoute = ({
                             <Component {...props} /> :
                             <div>
                                 <p>
-                                    You need to log in to view this page, click <Link to='/login'>here</Link> to log in
+                                    You need to log in to view this page, click <Link to='/sign'>here</Link> to log in
                                 </p>
                                 <p>
                                     You don't have a user yet? click <Link to='/register'>here</Link> to register

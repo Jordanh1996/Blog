@@ -1,6 +1,6 @@
 import React from 'react';
 import { getBlogsByTitle, getBlogsByUsername } from '../axios/blog';
-import BlogItem from './blogitem';
+import BlogItem from '../components/blogitem';
 import { setTimeout, clearTimeout } from 'timers';
 
 import { Card, CardText } from 'material-ui/Card';

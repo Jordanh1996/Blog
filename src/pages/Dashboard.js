@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import BlogList from './blogList';
+import LatestBlogs from '../components/latestBlogs';
 import { startDispatchSetBlogs } from '../actions/blog';
 
 const Dashboard = (props) => (
@@ -16,7 +16,7 @@ const Dashboard = (props) => (
                 Scroll down to browse the latest blogs
             </div>
         </div>
-        <BlogList 
+        <LatestBlogs 
             getBlogs={props.getBlogs}
             blogs={props.blogs}
         />

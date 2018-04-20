@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import BlogForm from './blogForm';
+import BlogForm from '../components/blogForm';
 import { DispatchEditBlog } from '../actions/blog';
 import { EditBlog } from '../axios/blog';
 import { DispatchEditMyBlog } from '../actions/myblogs';

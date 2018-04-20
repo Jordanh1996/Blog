@@ -4,13 +4,13 @@ import PrivateRoute from './privateRoute';
 import PublicRoute from './publicRoute';
 import StructuredRoute from './structuredRoute';
 import createHistory from 'history/createBrowserHistory';
-import Notfound from '../components/notfound';
-import Dashboard from '../components/Dashboard';
-import AddBlog from '../components/addblog';
-import Blog from '../components/blog';
-import Sign from '../components/sign';
-import EditBlog from '../components/editblog';
-import SearchBlogs from '../components/searchBlogs';
+import Notfound from '../pages/notfound';
+import Dashboard from '../pages/Dashboard';
+import AddBlog from '../pages/addblog';
+import Blog from '../pages/blog';
+import Sign from '../pages/sign';
+import EditBlog from '../pages/editblog';
+import SearchBlogs from '../pages/searchBlogs';
 
 export const history = createHistory();
 
@@ -24,7 +24,6 @@ const Website = () => (
                 <StructuredRoute path="/blog/:id" component={Blog} exact />
                 <StructuredRoute path='/search' component={SearchBlogs} />
                 <StructuredRoute path="/blog/edit/:id" component={EditBlog} />
-                <PublicRoute path="/sign" component={Sign} />
                 <PublicRoute path="/sign" component={Sign} />
                 <StructuredRoute component={Notfound} />
             </Switch>
