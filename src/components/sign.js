@@ -7,6 +7,6 @@ const Sign = () => (
         <Login />
         <Register />
     </div>
-)
+);
 
-export default Sign
+export default Sign;

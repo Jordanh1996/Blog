@@ -1,15 +1,13 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
-import {Remove} from '../axios/blog';
-import RemoveModal from './removeModal';
-import {DispatchSetBlogs} from '../actions/blog';
-import {getBlogById} from '../axios/blog';
-import {DispatchRemoveBlog} from '../actions/myblogs';
+import { Remove, getBlogById } from '../axios/blog';
+import { DispatchSetBlogs } from '../actions/blog';
+import { DispatchRemoveBlog } from '../actions/myblogs';
 
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
+import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
 
 class Blog extends React.Component {
 
@@ -21,26 +19,26 @@ class Blog extends React.Component {
     componentWillMount() {
         if (!this.props.blog) {
             getBlogById(this.props.match.params.id).then((res) => {
-                this.props.dispatchSetBlog([res.data.resblog])
-            })
+                this.props.dispatchSetBlog([res.data.resblog]);
+            });
         }
     }
 
     openModal = () => {
-        this.setState(() => ({modalopen: true}))
+        this.setState(() => ({ modalopen: true }));
     }
 
     closeModal = () => {
-        this.setState(() => ({modalopen: false}))
+        this.setState(() => ({ modalopen: false }));
     }
 
     confirmRemove = () => {
-        this.closeModal()
+        this.closeModal();
         Remove(this.props.match.params.id, this.props.user.token)
         .then(() => {
-            this.props.dispatchRemoveBlog(this.props.blog._id)
-            this.props.history.push('/')
-        })
+            this.props.dispatchRemoveBlog(this.props.blog._id);
+            this.props.history.push('/');
+        });
     }
 
     render() {
@@ -50,14 +48,14 @@ class Blog extends React.Component {
                     this.props.blog ?
                     <Card
                         style={{
-                            'margin': '1rem'
+                            margin: '1rem'
                         }}
                     >
                     <CardHeader
                         title={this.props.blog.title}
                         titleStyle={{
-                            'fontSize': '3.6rem',
-                            'wordBreak': 'break-all'
+                            fontSize: '3.6rem',
+                            wordBreak: 'break-all'
                         }}
                         subtitle={`Posted by ${this.props.blog._creatorUser}, ` + 
                         (moment().unix() * 1000 - this.props.blog._createdAt > 2246400000 ?
@@ -68,7 +66,7 @@ class Blog extends React.Component {
 
                     <CardText
                         style={{
-                            'wordBreak': 'break-all'
+                            wordBreak: 'break-all'
                         }}
                     >
                         <p className="blog__content">{this.props.blog.content}</p>
@@ -87,16 +85,16 @@ class Blog extends React.Component {
                                 <div>
                                     <RaisedButton
                                         label="Edit"
-                                        primary={true}
+                                        primary
                                         containerElement={<Link to={`edit/${this.props.blog._id}`}></Link>}
                                     />
                                     
                                     <RaisedButton
                                         label="Remove"
-                                        secondary={true}
+                                        secondary
                                         onClick={this.confirmRemove}
                                         style={{
-                                            'marginLeft': '1rem'
+                                            marginLeft: '1rem'
                                         }}
                                     />
                                 </div>
@@ -112,21 +110,18 @@ class Blog extends React.Component {
 }
 
     
-
-
-
 const mapStateToProps = (state, props) => {
     return {
         blog: state.blogs.find((blog) => blog._id === props.match.params.id),
         user: state.user
-    }
-}
+    };
+};
 
 const mapDispatchToProps = (dispatch) => {
     return {
         dispatchSetBlog: (blog) => dispatch(DispatchSetBlogs(blog)),
         dispatchRemoveBlog: (id) => dispatch(DispatchRemoveBlog(id))
-    }
-}
+    };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Blog);

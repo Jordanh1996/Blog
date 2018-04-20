@@ -1,9 +1,7 @@
 import React from 'react';
-import {connect} from 'react-redux';
 import BlogList from './blogList';
-import SideBar from './sideBar';
 
-const Dashboard = (props) => (
+const Dashboard = () => (
     <div className="content__divide">
         <div className="dashboard__divide-header">
             <div className="dashboard__title">
@@ -18,6 +16,6 @@ const Dashboard = (props) => (
         </div>
         <BlogList />
     </div>
-)
+);
 
 export default Dashboard;

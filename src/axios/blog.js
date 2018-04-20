@@ -2,64 +2,64 @@ import axios from 'axios';
 
 export const getBlogsByTitle = (title) => {
     return axios({
-        method: 'get',
-        url: `https://blogserver-jordan.herokuapp.com/blog/title/${encodeURIComponent(title)}`,
-    })
-}
+        method: 'GET',
+        url: `${process.env.URL}blog/title/${encodeURIComponent(title)}`,
+    });
+};
 
 export const getBlogsByUsername = (username) => {
     return axios({
-        method: 'get',
-        url: `https://blogserver-jordan.herokuapp.com/blog/username/${(username)}`
-    })
-}
+        method: 'GET',
+        url: `${process.env.URL}blog/username/${(username)}`
+    });
+};
 
 export const getBlogs = (amount, last) => {
     return axios({
-        method: "post",
-        url: 'https://blogserver-jordan.herokuapp.com/blog/get',
+        method: 'POST',
+        url: `${process.env.URL}blog/get`,
         data: {
             amount,
             last
         }
-    })
-}
+    });
+};
 
 export const getBlogById = (id) => {
     return axios({
-        method: "get",
-        url: `https://blogserver-jordan.herokuapp.com/blog/${id}`
-    })
-}
+        method: 'GET',
+        url: `${process.env.URL}blog/${id}`
+    });
+};
 
 export const addBlog = (token, title, content) => {
     return axios({
-        method: "post",
-        url: 'https://blogserver-jordan.herokuapp.com/blog',
-        headers: {'x-auth': token},
+        method: 'POST',
+        url: `${process.env.URL}blog`,
+        headers: { 'x-auth': token },
         data: {
             title,
             content
         }
-    })
-}
+    });
+};
 
 export const EditBlog = (token, id, title, content) => {
     return axios({
-        method: "patch",
-        url: `https://blogserver-jordan.herokuapp.com/blog/${id}`,
-        headers: {'x-auth': token},
+        method: 'PATCH',
+        url: `${process.env.URL}blog/${id}`,
+        headers: { 'x-auth': token },
         data: {
             title,
             content
         }
-    })
-}
+    });
+};
 
 export const Remove = (id, token) => {
     return axios({
-        method: "delete",
-        url: `https://blogserver-jordan.herokuapp.com/blog/${id}`,
-        headers: {'x-auth': token}
-    })
-}
+        method: 'DELETE',
+        url: `${process.env.URL}blog/${id}`,
+        headers: { 'x-auth': token }
+    });
+};

@@ -1,15 +1,12 @@
 import React from 'react';
-import {List, ListItem} from 'material-ui/List';
+import { List, ListItem } from 'material-ui/List';
 import ContentInbox from 'material-ui/svg-icons/content/inbox';
-import ContentDrafts from 'material-ui/svg-icons/content/drafts';
 import ContentSend from 'material-ui/svg-icons/content/send';
-import Toggle from 'material-ui/Toggle';
-import TextField from 'material-ui/TextField';
 
-import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
-import {getBlogsByUsername} from '../axios/blog';
-import {DispatchSetBlogs} from '../actions/myblogs';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { getBlogsByUsername } from '../axios/blog';
+import { DispatchSetBlogs } from '../actions/myblogs';
 
 class SideBar extends React.Component {
 
@@ -19,12 +16,12 @@ class SideBar extends React.Component {
   };
 
   componentDidMount() {
-    if (this.props.blogs.length === 0) {
-        this.setState(() => ({loading: true}))
+    if (this.props.blogs.length === 0 && this.props.username) {
+        this.setState(() => ({ loading: true }));
         return getBlogsByUsername(this.props.username).then((res) => {
-            this.props.dispatchSetBlogs(res.data.resblog)
-            this.setState(() => ({loading: false}))
-        })
+            this.props.dispatchSetBlogs(res.data.resblog);
+            this.setState(() => ({ loading: false }));
+        });
     }
   }
 
@@ -38,27 +35,26 @@ class SideBar extends React.Component {
     return (
       <List
         style={{
-          "background": 'white',
-          'overflowY': 'scroll',
-          'overflowX': 'hidden',
-          'height': '90vh',
-          'width': '20rem'
+          background: 'white',
+          overflowY: 'scroll',
+          overflowX: 'hidden',
+          height: '90vh',
+          width: '20rem'
         }}
         className="sidebar"
       >
         <ListItem 
           primaryText="Add Blog" 
           leftIcon={<ContentSend />} 
-          containerElement={<Link to={`/addblog`} />}  
+          containerElement={<Link to={'/addblog'} />}  
         />
         {
             this.state.loading ?
             <ListItem
               primaryText="My Blogs"
               leftIcon={<ContentInbox />}
-              initiallyOpen={true}
-              primaryTogglesNestedList={true} 
-              
+              initiallyOpen
+              primaryTogglesNestedList
               nestedItems={[
                 <ListItem
                   key={1}
@@ -69,10 +65,10 @@ class SideBar extends React.Component {
             :
 
             <ListItem
-              primaryText={"My Blogs"}
+              primaryText={'My Blogs'}
               leftIcon={<ContentInbox />}
-              initiallyOpen={true}
-              primaryTogglesNestedList={true}
+              initiallyOpen
+              primaryTogglesNestedList
               
               nestedItems={
                 this.props.blogs.map((blog) => {
@@ -99,13 +95,13 @@ const mapStateToProps = (state) => {
     return {
         username: state.user.username,
         blogs: state.myblogs
-    }
-}
+    };
+};
 
 const mapDispatchToProps = (dispatch) => {
     return {
         dispatchSetBlogs: (blogs) => dispatch(DispatchSetBlogs(blogs))
-    }
-}
+    };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SideBar);

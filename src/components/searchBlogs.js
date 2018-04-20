@@ -1,9 +1,9 @@
 import React from 'react';
-import {getBlogsByTitle, getBlogsByUsername} from '../axios/blog';
+import { getBlogsByTitle, getBlogsByUsername } from '../axios/blog';
 import BlogItem from './blogitem';
 import { setTimeout, clearTimeout } from 'timers';
 
-import {Card, CardText} from 'material-ui/Card';
+import { Card, CardText } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
@@ -20,32 +20,33 @@ class SearchBlogs extends React.Component {
 
     onType = () => {
         if (this.state.selected === 'Title') {
-            return this.setState(() => ({selected: 'Username', text: ''}))
+            return this.setState(() => ({ selected: 'Username', text: '' }));
         }
-        this.setState(() => ({selected: 'Title', text: ''}))
-    }
-    
-    Check = (text) => {
-        if (this.state.selected === 'Title') {
-            return getBlogsByTitle(text)
-        } else if (this.state.selected === 'Username') {
-            return getBlogsByUsername(text)
-        }
+        this.setState(() => ({ selected: 'Title', text: '' }));
     }
 
     onText = (e) => {
-        clearTimeout(this.state.timeout)
-        this.setState(() => ({loading: true}))
-        const text = e.target.value
-        this.setState(() => ({text}))
-        this.setState(() => ({timeout: setTimeout(() => {
+        clearTimeout(this.state.timeout);
+        this.setState(() => ({ loading: true }));
+        const text = e.target.value;
+        this.setState(() => ({ text }));
+        this.setState(() => ({ timeout: setTimeout(() => {
             if (this.state.text !== '') {
-                return this.Check(text).then((res) => {
-                    this.setState(() => ({blogs: res.data.resblog, loading: false}))
-                })
+                return this.check(text).then((res) => {
+                    this.setState(() => ({ blogs: res.data.resblog, loading: false }));
+                });
             }
-            this.setState(() => ({loading: false}))
-        }, 500)}))
+            this.setState(() => ({ loading: false }));
+        }, 500)
+    }));
+    }
+
+    check = (text) => {
+        if (this.state.selected === 'Title') {
+            return getBlogsByTitle(text);
+        } else if (this.state.selected === 'Username') {
+            return getBlogsByUsername(text);
+        }
     }
 
     render() {
@@ -53,18 +54,18 @@ class SearchBlogs extends React.Component {
             <div className="content__divide">
                 <Card
                     style={{
-                        'margin': '1rem'
+                        margin: '1rem'
                     }}
                 >
                     <CardText
                         style={{
-                            'textAlign': 'center'
+                            textAlign: 'center'
                         }}
                     >
                         <p className="search__title">Search By {this.state.selected}</p>
                         <RaisedButton
                             onClick={this.onType}
-                            primary={true}
+                            primary
                             label={'Toggle Search Method'}
                         />
 
@@ -98,7 +99,7 @@ class SearchBlogs extends React.Component {
                     })
                 }
             </div>
-        )
+        );
     }
 }
 

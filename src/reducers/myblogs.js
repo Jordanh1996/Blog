@@ -1,24 +1,24 @@
 
 
 export default (state = [], action) => {
-    switch(action.type) {
+    switch (action.type) {
         
-        case "SET_MY_BLOGS":
-            return action.blogs
+        case 'SET_MY_BLOGS':
+            return action.blogs;
             
-        case "REMOVE_MY_BLOGS":
-            return []
+        case 'REMOVE_MY_BLOGS':
+            return [];
 
-        case "REMOVE_MY_BLOG":
-            return state.filter((blog) => blog._id !== action.id)
+        case 'REMOVE_MY_BLOG':
+            return state.filter((blog) => blog._id !== action.id);
 
-        case "ADD_MY_BLOGS":
+        case 'ADD_MY_BLOGS':
             return [
                 ...state,
                 action.blog
-            ]
+            ];
 
-        case "EDIT_MY_BLOGS":
+        case 'EDIT_MY_BLOGS':
             return state.map((blog) => {
                 if (blog._id === action.id) {
                     return {
@@ -26,10 +26,11 @@ export default (state = [], action) => {
                         title: action.title,
                         content: action.content
                     }
-                } else return blog
-            })
+                }
+                return blog;
+            });
 
         default: 
-            return state
+            return state;
     }
-}
+};

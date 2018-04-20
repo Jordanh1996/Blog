@@ -1,12 +1,12 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {checkUsername, checkEmail, PostRegister} from '../axios/register';
-import {DispatchLogIn} from '../actions/log';
-import {login} from '../axios/log';
+import { connect } from 'react-redux';
+import { checkUsername, checkEmail, PostRegister } from '../axios/register';
+import { DispatchLogIn } from '../actions/log';
+import { login } from '../axios/log';
 import validator from 'validator';
 import { setTimeout, clearTimeout } from 'timers';
 
-import {Card, CardText} from 'material-ui/Card';
+import { Card, CardText } from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
  
@@ -34,100 +34,100 @@ class Register extends React.Component {
     }
 
     onUserChange = (e) => {
-        clearTimeout(this.state.userint)
+        clearTimeout(this.state.userint);
         const username = e.target.value;
-        this.setState(() => ({username}))
+        this.setState(() => ({ username }));
         if (username.length >= 6) {
-            this.setState(() => ({validusername: 'pending'}))
+            this.setState(() => ({ validusername: 'pending' }));
         } else {
-            this.setState(() => ({validusername: false}))
+            this.setState(() => ({ validusername: false }));
         }
-        this.setState(() => ({userint: setTimeout(() => {
+        this.setState(() => ({ userint: setTimeout(() => {
             if (this.state.username.length >= 6) {
                 checkUsername(this.state.username)
                 .then((res) => {
                     if (res.data) {
-                        return this.setState(() => ({validusername: true}))
+                        return this.setState(() => ({ validusername: true }));
                     }
-                    this.setState(() => ({validusername: false}))
-                }).catch((e) => {
-                    console.log(e)
-                })
+                    this.setState(() => ({ validusername: false }));
+                }).catch((err) => {
+                    console.log(err);
+                });
             }
-        }, 500)}))
-        
-
+        }, 500)
+    }));
     }
 
     onPasswordChange = (e) => {
         const password = e.target.value;
-        this.setState(() => ({password}))
+        this.setState(() => ({ password }));
         if (password.length >= 6) {
-            return this.setState(() => ({validpassword: true}))
+            return this.setState(() => ({ validpassword: true }));
         }
-        this.setState(() => ({validpassword: false}))
+        this.setState(() => ({ validpassword: false }));
     }
 
     onConfirmPasswordChange = (e) => {
         const confirmPassword = e.target.value;
-        this.setState(() => ({confirmPassword}))
+        this.setState(() => ({ confirmPassword }));
         if (confirmPassword === this.state.password) {
-            this.setState(() => ({validConfirmPassword: true}))
+            this.setState(() => ({ validConfirmPassword: true }));
         } else {
-            this.setState(() => ({validConfirmPassword: false}))
+            this.setState(() => ({ validConfirmPassword: false }));
         }
     }
 
     onEmailChange = (e) => {
-        clearTimeout(this.state.emailint)
+        clearTimeout(this.state.emailint);
         const email = e.target.value;
-        this.setState(() => ({email}))
+        this.setState(() => ({ email }));
         if (validator.isEmail(email)) {
-            this.setState(() => ({validEmail: 'pending'}))
+            this.setState(() => ({ validEmail: 'pending' }));
         } else {
-            this.setState(() => ({validEmail: false}))
+            this.setState(() => ({ validEmail: false }));
         }
-        this.setState(() => ({emailint: setTimeout(() => {
+        this.setState(() => ({ emailint: setTimeout(() => {
             if (validator.isEmail(email)) {
                 checkEmail(email)
                 .then((res) => {
                     if (res.data) {
-                        return this.setState(() => ({validEmail: true}))
+                        return this.setState(() => ({ validEmail: true }));
                     }
-                    this.setState(() => ({validEmail: false}))
-                }).catch((e) => {
-                    console.log(e)
-                })
+                    this.setState(() => ({ validEmail: false }));
+                }).catch((err) => {
+                    console.log(err);
+                });
             }
-        }, 500)}))
+        }, 500)
+    }));
     }
 
     onRegister = () => {
-        this.setState(() => ({submit: true}))
+        this.setState(() => ({ submit: true }));
         const JSONbody = {
             email: this.state.email,
             username: this.state.username,
             password: this.state.password
-        }
+        };
         PostRegister(JSONbody)
-        .then((res) => {
+        .then(() => {
             login(this.state.username, this.state.password).then((res) => {
                 this.props.dispatchLogIn(res.data.tokens[0].token, this.state.username).then(() => {
-                    this.props.history.push('/')
-                })
-            })
-        }).catch((e) => {
-            this.setState(() => ({error: true, submit: false}))
-        })
+                    this.props.history.push('/');
+                });
+            });
+        }).catch(() => {
+            this.setState(() => ({ error: true, submit: false }));
+        });
     }
 
-    render () {
+    render() {
         return (
             <Card
                 style={{
-                    'margin': '2rem 1rem',
-                    'width': '100%',
-                    'height': 'fit-content'
+                    margin: '2rem 1rem',
+                    width: '100%',
+                    height: 'fit-content'
                 }}
             >
             <CardText>
@@ -139,7 +139,9 @@ class Register extends React.Component {
                     type="text"
                     value={this.state.username}
                     onChange={this.onUserChange}
-                    errorText={!this.state.validusername && this.state.username.length > 5 ? "This user name is alredy taken" : ""}
+                    errorText={!this.state.validusername && this.state.username.length > 5 ? 
+                        'This user name is alredy taken' : 
+                        ''}
                 />
                 {
                     this.state.username === '' ?
@@ -199,7 +201,9 @@ class Register extends React.Component {
                     type="text"
                     value={this.state.email}
                     onChange={this.onEmailChange}
-                    errorText={!this.state.validEmail && validator.isEmail(this.state.email) ? "This email is alredy taken" : ""}
+                    errorText={!this.state.validEmail && validator.isEmail(this.state.email) ? 
+                        'This email is alredy taken' : 
+                        ''}
                 />
                 {
                     this.state.email === '' ?
@@ -219,29 +223,30 @@ class Register extends React.Component {
                 onClick={this.onRegister}
                 disabled={!(this.state.validEmail && this.state.validusername && this.state.validpassword && 
                     this.state.validConfirmPassword && this.state.validEmail !== 'pending' && this.state.validusername !== 'pending')}
-                primary={true}
-                label={"Submit"}
+                primary
+                label={'Submit'}
                 />
-                {   this.state.submit ?
+                {   
+                    this.state.submit ?
                     <img className='image-register' src='/images/loader.gif' /> :
                     ''
                 }
             </CardText>
             </Card>
-        )
+        );
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         dispatchLogIn: (token, username) => dispatch(DispatchLogIn(token, username))
-    }
-}
+    };
+};
 
 const mapStateToProps = (state) => {
     return {
         isOnline: state.user.token
-    }
-}
+    };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register);

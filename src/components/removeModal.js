@@ -19,6 +19,6 @@ const RemoveModal = (props) => (
     </div>
     </Modal>
 
-)
+);
 
 export default RemoveModal;
