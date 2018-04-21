@@ -10,13 +10,6 @@ export const dispatchConcatBlogs = (blogs) => ({
     blogs
 });
 
-export const dispatchEditBlog = (id, title ,content) => ({
-    type: 'EDIT_BLOG',
-    id,
-    title,
-    content
-});
-
 //thunk
 
 export const startDispatchSetBlogs = (blogs) => {

@@ -2,26 +2,28 @@ import React from 'react';
 import { List, ListItem } from 'material-ui/List';
 import ContentInbox from 'material-ui/svg-icons/content/inbox';
 import ContentSend from 'material-ui/svg-icons/content/send';
+import ActionGrade from 'material-ui/svg-icons/action/grade';
 
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getBlogsByUsername } from '../axios/blog';
-import { DispatchSetBlogs } from '../actions/myblogs';
+import { startDispatchSetBlogs } from '../actions/myblogs';
 
 class SideBar extends React.Component {
 
   state = {
     open: false,
-    loading: undefined
+    loading: null
   };
 
   componentDidMount() {
-    if (this.props.blogs.length === 0 && this.props.username) {
-        this.setState(() => ({ loading: true }));
-        return getBlogsByUsername(this.props.username).then((res) => {
-            this.props.dispatchSetBlogs(res.data.resblog);
-            this.setState(() => ({ loading: false }));
-        });
+    if (this.props.blogs.length > 0) {
+      return;
+    }
+    if (this.props.isLogged) {
+      this.setState(() => ({ loading: true }));
+      this.props.setBlogs().then(() => {
+        this.setState(() => ({ loading: false }));
+      });
     }
   }
 
@@ -38,21 +40,29 @@ class SideBar extends React.Component {
           background: 'white',
           overflowY: 'scroll',
           overflowX: 'hidden',
-          height: '90vh',
           width: '20rem'
         }}
         className="sidebar"
       >
         <ListItem 
           primaryText="Add Blog" 
-          leftIcon={<ContentSend />} 
+          leftIcon={<ContentSend color={'#3F51B5'} />} 
           containerElement={<Link to={'/addblog'} />}  
         />
+        {
+          this.props.isLogged ?
+          null :
+          <ListItem
+            primaryText="Sign In"
+            leftIcon={<ActionGrade color={'#3F51B5'} />}
+            containerElement={<Link to={'sign'} />}
+          />
+        }
         {
             this.state.loading ?
             <ListItem
               primaryText="My Blogs"
-              leftIcon={<ContentInbox />}
+              leftIcon={<ContentInbox color={'#3F51B5'} />}
               initiallyOpen
               primaryTogglesNestedList
               nestedItems={[
@@ -66,7 +76,7 @@ class SideBar extends React.Component {
 
             <ListItem
               primaryText={'My Blogs'}
-              leftIcon={<ContentInbox />}
+              leftIcon={<ContentInbox color={'#3F51B5'} />}
               initiallyOpen
               primaryTogglesNestedList
               
@@ -93,14 +103,14 @@ class SideBar extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        username: state.user.username,
-        blogs: state.myblogs
+        blogs: state.myblogs,
+        isLogged: state.user.username
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        dispatchSetBlogs: (blogs) => dispatch(DispatchSetBlogs(blogs))
+        setBlogs: () => dispatch(startDispatchSetBlogs())
     };
 };
 

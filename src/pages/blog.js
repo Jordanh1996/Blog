@@ -2,9 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import { Remove, getBlogById } from '../axios/blog';
-import { DispatchSetBlogs } from '../actions/blog';
-import { DispatchRemoveBlog } from '../actions/myblogs';
+import { startDispatchRemoveBlog } from '../actions/myblogs';
+import { getBlogById } from '../axios/blog';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
@@ -12,16 +11,15 @@ import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
 class Blog extends React.Component {
 
     state = {
-        modalopen: false
+        modalopen: false,
+        blog: null,
     }
 
 
     componentWillMount() {
-        if (!this.props.blog) {
-            getBlogById(this.props.match.params.id).then((res) => {
-                this.props.dispatchSetBlog([res.data.resblog]);
-            });
-        }
+        getBlogById(this.props.match.params.id).then((res) => {
+            this.setState(() => ({ blog: res.data.resblog }));
+        });
     }
 
     openModal = () => {
@@ -34,9 +32,8 @@ class Blog extends React.Component {
 
     confirmRemove = () => {
         this.closeModal();
-        Remove(this.props.match.params.id, this.props.user.token)
+        this.props.removeBlog(this.props.match.params.id)
         .then(() => {
-            this.props.dispatchRemoveBlog(this.props.blog._id);
             this.props.history.push('/');
         });
     }
@@ -45,22 +42,22 @@ class Blog extends React.Component {
         return (
             <div className="content__divide">
                 {
-                    this.props.blog ?
+                    this.state.blog ?
                     <Card
                         style={{
                             margin: '1rem'
                         }}
                     >
                     <CardHeader
-                        title={this.props.blog.title}
+                        title={this.state.blog.title}
                         titleStyle={{
                             fontSize: '3.6rem',
                             wordBreak: 'break-all'
                         }}
-                        subtitle={`Posted by ${this.props.blog._creatorUser}, ` + 
-                        (moment().unix() * 1000 - this.props.blog._createdAt > 2246400000 ?
-                            `${moment(this.props.blog._createdAt).format('MMMM Do YYYY')}` :
-                            `${moment(this.props.blog._createdAt).fromNow()}`)
+                        subtitle={`Posted by ${this.state.blog._creatorUser}, ` + 
+                        (moment().unix() * 1000 - this.state.blog._createdAt > 2246400000 ?
+                            `${moment(this.state.blog._createdAt).format('MMMM Do YYYY')}` :
+                            `${moment(this.state.blog._createdAt).fromNow()}`)
                         }
                     />
 
@@ -69,24 +66,24 @@ class Blog extends React.Component {
                             wordBreak: 'break-all'
                         }}
                     >
-                        <p className="blog__content">{this.props.blog.content}</p>
+                        <p className="blog__content">{this.state.blog.content}</p>
                         {
-                            this.props.blog.editTime ?
-                            <p className='blog__edited'>Last Edited : {(moment().unix() * 1000 - this.props.blog.editTime > 2246400000 ?
-                            `${moment(this.props.blog.editTime).format('MMMM Do YYYY')}` :
-                            `${moment(this.props.blog.editTime).fromNow()}`)}</p> :
+                            this.state.blog.editTime ?
+                            <p className='blog__edited'>Last Edited : {(moment().unix() * 1000 - this.state.blog.editTime > 2246400000 ?
+                            `${moment(this.state.blog.editTime).format('MMMM Do YYYY')}` :
+                            `${moment(this.state.blog.editTime).fromNow()}`)}</p> :
                             ''
                         }
                     </CardText>
 
                     <CardActions>
                         {
-                            this.props.blog._creatorUser === this.props.user.username ?
+                            this.state.blog._creatorUser === this.props.user ?
                                 <div>
                                     <RaisedButton
                                         label="Edit"
                                         primary
-                                        containerElement={<Link to={`edit/${this.props.blog._id}`}></Link>}
+                                        containerElement={<Link to={`edit/${this.state.blog._id}`}></Link>}
                                     />
                                     
                                     <RaisedButton
@@ -105,22 +102,20 @@ class Blog extends React.Component {
                 <img className='image-register' src='/images/loader.gif' />
                 }
             </div>
-        )
+        );
     }
 }
 
     
-const mapStateToProps = (state, props) => {
+const mapStateToProps = (state) => {
     return {
-        blog: state.blogs.find((blog) => blog._id === props.match.params.id),
-        user: state.user
+        user: state.user.username
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        dispatchSetBlog: (blog) => dispatch(DispatchSetBlogs(blog)),
-        dispatchRemoveBlog: (id) => dispatch(DispatchRemoveBlog(id))
+        removeBlog: (id) => dispatch(startDispatchRemoveBlog(id))
     };
 };
 

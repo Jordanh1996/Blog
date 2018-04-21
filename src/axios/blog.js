@@ -44,7 +44,7 @@ export const addBlog = (token, title, content) => {
     });
 };
 
-export const EditBlog = (token, id, title, content) => {
+export const editBlog = (token, id, title, content) => {
     return axios({
         method: 'PATCH',
         url: `${process.env.URL}blog/${id}`,
@@ -56,7 +56,7 @@ export const EditBlog = (token, id, title, content) => {
     });
 };
 
-export const Remove = (id, token) => {
+export const removeBlog = (id, token) => {
     return axios({
         method: 'DELETE',
         url: `${process.env.URL}blog/${id}`,

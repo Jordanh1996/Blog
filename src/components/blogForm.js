@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import TextField from 'material-ui/TextField';
 import { Card, CardText } from 'material-ui/Card';
@@ -25,7 +24,7 @@ class BlogForm extends React.Component {
 
     onSubmit = () => {
         this.setState(() => ({ disable: true }));
-        this.props.onSubmit(this.props.token, this.state.title, this.state.content);
+        this.props.onSubmit(this.state.title, this.state.content);
     }
 
 
@@ -74,10 +73,4 @@ class BlogForm extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        token: state.user.token
-    };
-};
-
-export default connect(mapStateToProps)(BlogForm);
+export default BlogForm;

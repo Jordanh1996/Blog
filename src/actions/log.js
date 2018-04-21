@@ -1,5 +1,5 @@
 
-export const DispatchLogIn = (token, username) => ({
+export const dispatchLogIn = (token, username) => ({
     type: 'LOG_IN',
     user: {
         token,
@@ -7,6 +7,6 @@ export const DispatchLogIn = (token, username) => ({
     }
 });
 
-export const DispatchLogOut = () => ({
+export const dispatchLogOut = () => ({
     type: 'LOG_OUT'
 });

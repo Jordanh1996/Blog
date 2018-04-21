@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { persistor } from '../app';
-import { DispatchLogOut } from '../actions/log';
+import { dispatchLogOut } from '../actions/log';
 import { logout } from '../axios/log';
-import { DispatchRemoveBlogs } from '../actions/myblogs';
+import { dispatchRemoveBlogs } from '../actions/myblogs';
 
 
 class Header extends React.Component {
@@ -76,8 +76,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        dispatchLogout: () => dispatch(DispatchLogOut()),
-        dispatchRemoveMyBlogs: () => dispatch(DispatchRemoveBlogs())
+        dispatchLogout: () => dispatch(dispatchLogOut()),
+        dispatchRemoveMyBlogs: () => dispatch(dispatchRemoveBlogs())
     };
 };
 
