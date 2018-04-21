@@ -83,7 +83,9 @@ class Blog extends React.Component {
                                     <RaisedButton
                                         label="Edit"
                                         primary
-                                        containerElement={<Link to={`edit/${this.state.blog._id}`}></Link>}
+                                        containerElement={<Link 
+                                            to={`edit/${this.state.blog._id}`}
+                                        />}
                                     />
                                     
                                     <RaisedButton

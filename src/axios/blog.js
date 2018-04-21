@@ -1,26 +1,14 @@
 import axios from 'axios';
 
-export const getBlogsByTitle = (title) => {
-    return axios({
-        method: 'GET',
-        url: `${process.env.URL}blog/title/${encodeURIComponent(title)}`,
-    });
-};
-
-export const getBlogsByUsername = (username) => {
-    return axios({
-        method: 'GET',
-        url: `${process.env.URL}blog/username/${(username)}`
-    });
-};
-
-export const getBlogs = (amount, last) => {
+export const getBlogs = (amount, last, username, title) => {
     return axios({
         method: 'POST',
         url: `${process.env.URL}blog/get`,
         data: {
             amount,
-            last
+            last,
+            username,
+            title
         }
     });
 };

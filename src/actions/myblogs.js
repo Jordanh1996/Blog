@@ -1,7 +1,7 @@
 import { 
     addBlog, 
     editBlog, 
-    getBlogsByUsername,
+    getBlogs,
     removeBlog
  } from '../axios/blog';
 
@@ -56,7 +56,7 @@ export const startDispatchEditBlog = (id, title, content) => {
 export const startDispatchSetBlogs = () => {
     return (dispatch, getState) => {
         const username = getState().user.username;
-        return getBlogsByUsername(username).then((res) => {
+        return getBlogs(undefined, undefined, username).then((res) => {
             dispatch(dispatchSetBlogs(res.data.resblog));
         });
     };

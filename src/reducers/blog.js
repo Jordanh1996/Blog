@@ -8,17 +8,8 @@ export default (state = [], action) => {
         case 'CONCAT_BLOGS':
             return state.concat(action.blogs);
 
-        case 'EDIT_BLOG':
-            return state.map((blog) => {
-                if (blog._id === action.id) {
-                    return {
-                        ...blog,
-                        title: action.title,
-                        content: action.content
-                    };
-                } 
-                return blog;
-            });
+        case 'REMOVE_BLOGS':
+            return [];
 
         default: 
             return state;

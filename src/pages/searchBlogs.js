@@ -1,51 +1,66 @@
 import React from 'react';
-import { getBlogsByTitle, getBlogsByUsername } from '../axios/blog';
-import BlogItem from '../components/blogitem';
+import { connect } from 'react-redux';
+import { startDispatchSetBlogs, dispatchRemoveBlogs } from '../actions/blog';
+import BlogList from '../components/blogList';
 import { setTimeout, clearTimeout } from 'timers';
 
 import { Card, CardText } from 'material-ui/Card';
-import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 
 
 class SearchBlogs extends React.Component {
 
     state = {
-        selected: 'Title',
-        text: '',
-        blogs: [],
+        username: '',
+        title: '',
         timeout: undefined,
-        loading: false
+        loading: false,
+        noResults: false
     }
 
-    onType = () => {
-        if (this.state.selected === 'Title') {
-            return this.setState(() => ({ selected: 'Username', text: '' }));
-        }
-        this.setState(() => ({ selected: 'Title', text: '' }));
+    componentWillMount() {
+        this.props.removeBlogs();
     }
 
-    onText = (e) => {
+    onUsernameChange = (e) => {
+        const username = e.target.value;
+        this.setState(() => ({ username }));
+        this.onText(username, this.state.title);
+    }
+
+    onTitleChange = (e) => {
+        const title = e.target.value;
+        this.setState(() => ({ title }));
+        this.onText(this.state.username, title);
+    }
+
+    onText = (username, title) => {
         clearTimeout(this.state.timeout);
-        this.setState(() => ({ loading: true }));
-        const text = e.target.value;
-        this.setState(() => ({ text }));
-        this.setState(() => ({ timeout: setTimeout(() => {
-            if (this.state.text !== '') {
-                return this.check(text).then((res) => {
-                    this.setState(() => ({ blogs: res.data.resblog, loading: false }));
+        if (username !== '' || title !== '') {
+            this.setState(() => ({ timeout: setTimeout(() => {
+                this.setState(() => ({ loading: true }));
+                this.props.getBlogs(undefined, username, title).then(() => {
+                    if (this.props.blogs.length < 1) {
+                        return this.setState(() => ({ 
+                            noResults: true,
+                            loading: false
+                        }));
+                    }
+                    this.setState(() => ({ 
+                        noResults: false,
+                        loading: false
+                    }));
                 });
-            }
-            this.setState(() => ({ loading: false }));
-        }, 500)
-    }));
+            }, 800) }));
+        }
     }
 
-    check = (text) => {
-        if (this.state.selected === 'Title') {
-            return getBlogsByTitle(text);
-        } else if (this.state.selected === 'Username') {
-            return getBlogsByUsername(text);
+    bottom = () => {
+        if (this.props.blogs.length > 0 && !this.state.loading) {
+            this.setState(() => ({ loading: true }));
+            this.props.getBlogs(this.props.blogs, this.state.username, this.state.title).then(() => {
+                this.setState(() => ({ loading: false }));
+            });
         }
     }
 
@@ -53,55 +68,56 @@ class SearchBlogs extends React.Component {
         return (
             <div className="content__divide">
                 <Card
-                    style={{
-                        margin: '1rem'
-                    }}
+                    className="search__card"
                 >
                     <CardText
-                        style={{
-                            textAlign: 'center'
-                        }}
+                        className="search__card-content"
                     >
-                        <p className="search__title">Search By {this.state.selected}</p>
-                        <RaisedButton
-                            onClick={this.onType}
-                            primary
-                            label={'Toggle Search Method'}
-                        />
-
-                        <br />
-
-                        <TextField
-                            type="text"
-                            hintText={this.state.selected}
-                            floatingLabelText={this.state.selected}
-                            value={this.state.text}
-                            onChange={this.onText}
-                        />
-                        <br />
+                        <p className="search__title">Search</p>
+                        <div className="search__textFields">
+                            <TextField
+                                type="text"
+                                hintText="Username"
+                                floatingLabelText="Username"
+                                value={this.state.username}
+                                onChange={this.onUsernameChange}
+                            />
+                            <TextField
+                                type="text"
+                                hintText="Title"
+                                floatingLabelText="Title"
+                                value={this.state.title}
+                                onChange={this.onTitleChange}
+                            />
+                        </div>
                         {
-                            this.state.loading ?
-                            <img className='image-register' src='/images/loader.gif' /> :
-                            <p></p>
+                            this.state.noResults ?
+                            <p className="search__noResults">
+                                There are no results for this query
+                            </p> :
+                            null
                         }
                     </CardText>
                 </Card>
-                
-                {
-                    this.state.blogs.map((blog) => {
-                        return <BlogItem
-                            title={blog.title}
-                            content={blog.content}
-                            creator={blog._creatorUser}
-                            id={blog._id}
-                            key={blog._id}
-                        /> 
-                    })
-                }
+
+                <BlogList
+                    blogs={this.props.blogs}
+                    bottom={this.bottom}
+                    loading={this.state.loading}
+                />
+
             </div>
         );
     }
 }
 
+const mapStateToProps = (state) => ({
+    blogs: state.blogs
+});
 
-export default SearchBlogs;
+const mapDispatchToProps = (dispatch) => ({
+    getBlogs: (blogs, username, title) => dispatch(startDispatchSetBlogs(blogs, username, title)),
+    removeBlogs: () => dispatch(dispatchRemoveBlogs())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBlogs);

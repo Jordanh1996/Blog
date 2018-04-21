@@ -10,14 +10,18 @@ export const dispatchConcatBlogs = (blogs) => ({
     blogs
 });
 
-export const startDispatchSetBlogs = (blogs) => {
+export const dispatchRemoveBlogs = () => ({
+    type: 'REMOVE_BLOGS'
+});
+
+export const startDispatchSetBlogs = (blogs, username, title) => {
     return (dispatch) => {
         if (blogs) {
-            return getBlogs(5, blogs[blogs.length - 1]._id).then((res) => {
+            return getBlogs(5, blogs[blogs.length - 1]._id, username, title).then((res) => {
                 dispatch(dispatchConcatBlogs(res.data.resblog));
             });
         }
-        return getBlogs(10).then((res) => {
+        return getBlogs(10, undefined, username, title).then((res) => {
             dispatch(dispatchSetBlogs(res.data.resblog));
         });
     };

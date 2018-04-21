@@ -14,8 +14,8 @@ export default (state = [], action) => {
 
         case 'ADD_MY_BLOGS':
             return [
-                ...state,
-                action.blog
+                action.blog,
+                ...state
             ];
 
         case 'EDIT_MY_BLOGS':
