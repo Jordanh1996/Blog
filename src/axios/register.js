@@ -17,7 +17,7 @@ export const checkEmail = (email) => {
     });
 };
 
-export const PostRegister = (body) => {
+export const postRegister = (body) => {
     return axios({
         method: 'POST',
         url: `${process.env.URL}register`,

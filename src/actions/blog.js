@@ -10,8 +10,6 @@ export const dispatchConcatBlogs = (blogs) => ({
     blogs
 });
 
-//thunk
-
 export const startDispatchSetBlogs = (blogs) => {
     return (dispatch) => {
         if (blogs) {
