@@ -21,7 +21,7 @@ class SideBar extends React.Component {
     }
     if (this.props.isLogged) {
       this.setState(() => ({ loading: true }));
-      this.props.setBlogs().then(() => {
+      this.props.setBlogs(undefined, this.props.isLogged).then(() => {
         this.setState(() => ({ loading: false }));
       });
     }

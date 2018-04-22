@@ -16,8 +16,10 @@ class Register extends React.Component {
         userint: undefined,
         validusername: false,
         password: '',
+        passwordint: undefined,
         validpassword: false,
         confirmPassword: '',
+        confirmPasswordint: undefined,
         validConfirmPassword: false,
         email: '',
         emailint: undefined,
@@ -28,77 +30,90 @@ class Register extends React.Component {
 
     componentWillMount() {
         if (this.props.isOnline) {
-            this.props.history.push('/')
+            this.props.history.push('/');
         }
     }
 
     onUserChange = (e) => {
-        clearTimeout(this.state.userint);
         const username = e.target.value;
-        this.setState(() => ({ username }));
-        if (username.length >= 6) {
-            this.setState(() => ({ validusername: 'pending' }));
-        } else {
-            this.setState(() => ({ validusername: false }));
-        }
-        this.setState(() => ({ userint: setTimeout(() => {
-            if (this.state.username.length >= 6) {
-                checkUsername(this.state.username)
-                .then((res) => {
-                    if (res.data) {
-                        return this.setState(() => ({ validusername: true }));
+        if (!username || username.match(/^[a-z0-9]*$/i)) {
+            clearTimeout(this.state.userint);
+            this.setState(() => ({ 
+                username,
+                validusername: undefined,
+                userint: setTimeout(() => {
+                if (username.length < 6) {
+                    return this.setState(() => ({ 
+                        validusername: 'Username must include at least 6 characters' 
+                    }));
+                }
+                checkUsername(username).then((res) => {
+                    if (res.data.taken) {
+                        return this.setState(() => ({ 
+                            validusername: 'This username is alredy taken' 
+                        }));
                     }
-                    this.setState(() => ({ validusername: false }));
-                }).catch((err) => {
-                    console.log(err);
+                    this.setState(() => ({ validusername: '' }));
                 });
-            }
-        }, 500)
-    }));
+            }, 600) }));
+        }
     }
 
     onPasswordChange = (e) => {
+        clearTimeout(this.state.passwordint);
         const password = e.target.value;
-        this.setState(() => ({ password }));
-        if (password.length >= 6) {
-            return this.setState(() => ({ validpassword: true }));
-        }
-        this.setState(() => ({ validpassword: false }));
+        this.setState(() => ({ 
+            password,
+            validpassword: undefined,
+            passwordint: setTimeout(() => {
+                if (password.length < 6) {
+                    return this.setState(() => ({
+                        validpassword: 'Password must include at least 6 characters'
+                    }));
+                }
+                this.setState(() => ({ validpassword: '' }));
+            }, 600)
+         }));
     }
 
     onConfirmPasswordChange = (e) => {
+        clearTimeout(this.state.confirmPasswordint);
         const confirmPassword = e.target.value;
-        this.setState(() => ({ confirmPassword }));
-        if (confirmPassword === this.state.password) {
-            this.setState(() => ({ validConfirmPassword: true }));
-        } else {
-            this.setState(() => ({ validConfirmPassword: false }));
-        }
+        this.setState(() => ({ 
+            confirmPassword,
+            validConfirmPassword: undefined,
+            confirmPasswordint: setTimeout(() => {
+                if (confirmPassword !== this.state.password) {
+                    return this.setState(() => ({
+                        validConfirmPassword: 'Passwords do not match'
+                    }));
+                }
+                this.setState(() => ({ validConfirmPassword: '' }));
+            }, 600)
+         }));
     }
 
     onEmailChange = (e) => {
-        clearTimeout(this.state.emailint);
         const email = e.target.value;
-        this.setState(() => ({ email }));
-        if (validator.isEmail(email)) {
-            this.setState(() => ({ validEmail: 'pending' }));
-        } else {
-            this.setState(() => ({ validEmail: false }));
-        }
-        this.setState(() => ({ emailint: setTimeout(() => {
-            if (validator.isEmail(email)) {
-                checkEmail(email)
-                .then((res) => {
-                    if (res.data) {
-                        return this.setState(() => ({ validEmail: true }));
-                    }
-                    this.setState(() => ({ validEmail: false }));
-                }).catch((err) => {
-                    console.log(err);
-                });
+        clearTimeout(this.state.emailint);
+        this.setState(() => ({ 
+            email,
+            validEmail: undefined,
+            emailint: setTimeout(() => {
+            if (!validator.isEmail(email)) {
+                return this.setState(() => ({ 
+                    validEmail: 'Please enter a valid email' 
+                }));
             }
-        }, 500)
-    }));
+            checkEmail(email).then((res) => {
+                if (res.data.taken) {
+                    return this.setState(() => ({ 
+                        validEmail: 'This email is alredy taken' 
+                    }));
+                }
+                this.setState(() => ({ validEmail: '' }));
+            });
+        }, 600) }));
     }
 
     onRegister = () => {
@@ -135,21 +150,16 @@ class Register extends React.Component {
                     type="text"
                     value={this.state.username}
                     onChange={this.onUserChange}
-                    errorText={!this.state.validusername && this.state.username.length > 5 ? 
-                        'This user name is alredy taken' : 
-                        ''}
+                    errorText={this.state.validusername}
                 />
                 {
                     this.state.username === '' ?
-                    '' :
-                    this.state.validusername === 'pending' ?
+                    null :
+                    this.state.validusername === undefined ?
                     <img className='image-register' src='/images/loader.gif' /> :
-                    this.state.validusername ? 
+                    !this.state.validusername ? 
                     <img className='image-register' src='/images/check.png' /> :
                     <img className='image-register' src='/images/xmark.png' />
-                }
-                {
-                    <div className="register__tip">Username must include at least 6 characters</div>
                 }
 
                 <br />
@@ -159,16 +169,16 @@ class Register extends React.Component {
                     type="password"
                     value={this.state.password}
                     onChange={this.onPasswordChange}
+                    errorText={this.state.validpassword}
                 />
-                {   
-                    this.state.password === '' ?
-                    '' :
-                    this.state.validpassword ?
-                    <img className='image-register' src="/images/check.png" /> :
-                    <img className='image-register' src="/images/xmark.png" />
-                }
                 {
-                    <div className="register__tip">Password must include at least 6 characters</div>
+                    this.state.password === '' ?
+                    null :
+                    this.state.validpassword === undefined ?
+                    <img className='image-register' src='/images/loader.gif' /> :
+                    !this.state.validpassword ? 
+                    <img className='image-register' src='/images/check.png' /> :
+                    <img className='image-register' src='/images/xmark.png' />
                 }
 
                 <br />
@@ -178,18 +188,17 @@ class Register extends React.Component {
                     type="password"
                     value={this.state.confirmPassword}
                     onChange={this.onConfirmPasswordChange}
+                    errorText={this.state.validConfirmPassword}
                 />
                 {
                     this.state.confirmPassword === '' ?
-                    '' :
-                    this.state.validConfirmPassword ?
-                    <img className='image-register' src="/images/check.png" /> :
-                    <img className='image-register' src="/images/xmark.png" />
+                    null :
+                    this.state.validConfirmPassword === undefined ?
+                    <img className='image-register' src='/images/loader.gif' /> :
+                    !this.state.validConfirmPassword ? 
+                    <img className='image-register' src='/images/check.png' /> :
+                    <img className='image-register' src='/images/xmark.png' />
                 }
-                {
-                    <div className="register__tip">Re-enter Password</div>
-                }
-
                 <br />
                 <TextField
                     hintText="Email"
@@ -197,28 +206,27 @@ class Register extends React.Component {
                     type="text"
                     value={this.state.email}
                     onChange={this.onEmailChange}
-                    errorText={!this.state.validEmail && validator.isEmail(this.state.email) ? 
-                        'This email is alredy taken' : 
-                        ''}
+                    errorText={this.state.validEmail}
                 />
                 {
                     this.state.email === '' ?
-                    <p></p> :
-                    this.state.validEmail === 'pending' ?
+                    null :
+                    this.state.validEmail === undefined ?
                     <img className='image-register' src='/images/loader.gif' /> :
-                    this.state.validEmail ? 
+                    !this.state.validEmail ? 
                     <img className='image-register' src='/images/check.png' /> :
                     <img className='image-register' src='/images/xmark.png' />
-                }
-                {
-                    <div className="register__tip">Enter a valid email</div>
                 }
 
                 <br />
                 <RaisedButton
                 onClick={this.onRegister}
-                disabled={!(this.state.validEmail && this.state.validusername && this.state.validpassword && 
-                    this.state.validConfirmPassword && this.state.validEmail !== 'pending' && this.state.validusername !== 'pending')}
+                disabled={
+                    !(this.state.validusername === '' && 
+                    this.state.validpassword === '' &&
+                    this.state.validConfirmPassword === '' &&
+                    this.state.validEmail === ''
+                ) || this.state.submit}
                 primary
                 label={'Submit'}
                 />
