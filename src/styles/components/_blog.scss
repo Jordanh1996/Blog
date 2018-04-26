@@ -4,5 +4,10 @@
 }
 
 .blog__edited {
-    color: $blue
+    color: $blue;
+}
+
+.blog__image {
+    max-width: 100%;
+    max-height: 100%;
 }

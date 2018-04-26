@@ -32,7 +32,7 @@ class Blog extends React.Component {
 
     confirmRemove = () => {
         this.closeModal();
-        this.props.removeBlog(this.props.match.params.id)
+        this.props.removeBlog(this.props.match.params.id, this.state.blog.image)
         .then(() => {
             this.props.history.push('/');
         });
@@ -73,6 +73,16 @@ class Blog extends React.Component {
                             `${moment(this.state.blog.editTime).format('MMMM Do YYYY')}` :
                             `${moment(this.state.blog.editTime).fromNow()}`)}</p> :
                             ''
+                        }
+                        {
+                            this.state.blog.image ?
+                            <img
+                                src={
+                                    `https://s3-eu-west-1.amazonaws.com/blog-jordan/${this.state.blog.image}`
+                                }
+                                className="blog__image"
+                            /> :
+                            null
                         }
                     </CardText>
 
@@ -117,7 +127,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        removeBlog: (id) => dispatch(startDispatchRemoveBlog(id))
+        removeBlog: (id, image) => dispatch(startDispatchRemoveBlog(id, image))
     };
 };
 

@@ -9,6 +9,8 @@ class BlogForm extends React.Component {
     state = {
         title: this.props.blog ? this.props.blog.title : '',
         content: this.props.blog ? this.props.blog.content : '',
+        image: this.props.blog ? this.props.blog.image : null,
+        imageChanged: false,
         disable: false
     };
 
@@ -22,11 +24,19 @@ class BlogForm extends React.Component {
         this.setState(() => ({ content }));
     }
 
-    onSubmit = () => {
-        this.setState(() => ({ disable: true }));
-        this.props.onSubmit(this.state.title, this.state.content);
+    onFileChange = (e) => {
+        const oldImageKey = this.state.image;
+        if (!this.state.imageChanged) {
+            this.setState(() => ({ imageChanged: oldImageKey }));
+        }
+        const image = e.target.files[0];
+        this.setState(() => ({ image }));
     }
 
+    onSubmit = () => {
+        this.setState(() => ({ disable: true }));
+        this.props.onSubmit(this.state.title, this.state.content, this.state.image, this.state.imageChanged);
+    }
 
     render() {
         return (
@@ -60,6 +70,12 @@ class BlogForm extends React.Component {
                         style={{
                             width: '100%'
                         }}
+                    />
+
+                    <input
+                        onChange={this.onFileChange}
+                        type='file'
+                        accept='image/*'
                     />
 
                     <RaisedButton 

@@ -10,8 +10,8 @@ class AddBlog extends React.Component {
         error: undefined
     }
 
-    onSubmit = (title, content) => {
-        this.props.addBlog(title, content).then(() => {
+    onSubmit = (title, content, image, imageChanged) => {
+        this.props.addBlog(title, content, image, imageChanged).then(() => {
             this.props.history.push('/');
         }).catch(() => {
             this.setState(() => ({ error: true }));
@@ -32,7 +32,7 @@ class AddBlog extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addBlog: (title, content) => dispatch(startDispatchAddBlog(title, content))
+        addBlog: (title, content, image, imageChanged) => dispatch(startDispatchAddBlog(title, content, image, imageChanged))
     };
 };
 
