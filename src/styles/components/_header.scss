@@ -6,7 +6,7 @@
     flex-direction: row;
     justify-content: space-between;
     padding: 0 $s-size;
-    background: $dark-blue;
+    background: linear-gradient(360deg, $blue, $blue-dark);
     flex: 0 0 auto;
 }
 

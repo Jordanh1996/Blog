@@ -79,6 +79,9 @@ class SearchBlogs extends React.Component {
                                 type="text"
                                 hintText="Username"
                                 floatingLabelText="Username"
+                                inputStyle={{
+                                    color: '#283593'
+                                }}
                                 value={this.state.username}
                                 onChange={this.onUsernameChange}
                             />
@@ -86,6 +89,9 @@ class SearchBlogs extends React.Component {
                                 type="text"
                                 hintText="Title"
                                 floatingLabelText="Title"
+                                inputStyle={{
+                                    color: '#283593'
+                                }}
                                 value={this.state.title}
                                 onChange={this.onTitleChange}
                             />

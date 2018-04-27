@@ -25,7 +25,7 @@ class BlogList extends React.Component {
             }
             {
                 this.props.loading ?
-                <div>
+                <div className='blog__loading'>
                     Loading Blogs...
                     <img className='loader__image' src='/images/loader.gif' />
                 </div>

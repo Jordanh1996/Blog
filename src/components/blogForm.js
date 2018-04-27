@@ -72,11 +72,15 @@ class BlogForm extends React.Component {
                         }}
                     />
 
+                    <br />
+
                     <input
                         onChange={this.onFileChange}
                         type='file'
                         accept='image/*'
                     />
+
+                    <br />
 
                     <RaisedButton 
                         onClick={this.onSubmit} disabled={this.state.disable} 

@@ -36,12 +36,6 @@ class SideBar extends React.Component {
   render() {
     return (
       <List
-        style={{
-          background: 'white',
-          overflowY: 'scroll',
-          overflowX: 'hidden',
-          width: '20rem'
-        }}
         className="sidebar"
       >
         <ListItem 

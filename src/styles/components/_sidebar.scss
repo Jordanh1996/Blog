@@ -4,5 +4,12 @@
 }
 
 .sidebar::-webkit-scrollbar-thumb {
-	background-color: #283593;
+	background-color: $blue;
+}
+
+.sidebar {
+	overflow-x: hidden;
+	overflow-y: scroll;
+	width: 20rem;
+	background: white;
 }

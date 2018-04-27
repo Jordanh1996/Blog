@@ -70,7 +70,6 @@ export const startDispatchEditBlog = (id, title, content, image, imageChanged) =
         }
         return getSignedUrl(token).then((res) => {
             return postFile(res.data.url, image).then(() => {
-                console.log(imageChanged);
                 deleteFile(token, imageChanged);
                 return editBlog(token, id, title, content, res.data.key).then(() => {
                     dispatch(dispatchEditBlog(id, title, content, res.data.key));
