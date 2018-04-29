@@ -2,7 +2,7 @@ import MyBlogsReducer from '../../reducers/myblogs';
 import blogs from '../fixtures/blogs';
 
 test('should set default state', () => {
-    const state = MyBlogsReducer(undefined, {type: '@@INIT'});
+    const state = MyBlogsReducer(undefined, { type: '@@INIT' });
     expect(state).toEqual([]);
 });
 
@@ -25,7 +25,7 @@ test('should REMOVE_MY_BLOGS', () => {
 test('should REMOVE_MY_BLOG', () => {
     const action = {
         type: 'REMOVE_MY_BLOG',
-        id: blogs[1]._id
+        id: blogs[1].id
     };
     const state = MyBlogsReducer(blogs, action);
     expect(state).toEqual([blogs[0]]);
@@ -34,7 +34,7 @@ test('should REMOVE_MY_BLOG', () => {
 test('should not REMOVE_MY_BLOG with incorrect id', () => {
     const action = {
         type: 'REMOVE_MY_BLOG',
-        id: blogs[1]._id
+        id: blogs[1].id
     };
     const state = MyBlogsReducer([blogs[0]], action);
     expect(state).toEqual([blogs[0]]);
@@ -52,18 +52,18 @@ test('should ADD_MY_BLOGS', () => {
 test('should EDIT_MY_BLOGS', () => {
     const action = {
         type: 'EDIT_MY_BLOGS',
-        id: blogs[1]._id,
+        id: blogs[1].id,
         title: blogs[0].title,
         content: blogs[0].content
     };
     const state = MyBlogsReducer([blogs[1]], action);
-    expect(state).toEqual([{...blogs[1], title: blogs[0].title, content: blogs[0].content}]);
+    expect(state).toEqual([{ ...blogs[1], title: blogs[0].title, content: blogs[0].content }]);
 });
 
 test('should not EDIT_MY_BLOGS with incorrect id', () => {
     const action = {
         type: 'EDIT_MY_BLOGS',
-        id: blogs[0]._id,
+        id: blogs[0].id,
         title: blogs[0].title,
         content: blogs[0].content
     };

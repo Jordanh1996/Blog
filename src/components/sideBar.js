@@ -38,22 +38,22 @@ class SideBar extends React.Component {
       <List
         className="sidebar"
       >
-        <ListItem 
-          primaryText="Add Blog" 
-          leftIcon={<ContentSend color={'#3F51B5'} />} 
-          containerElement={<Link to={'/addblog'} />}  
+        <ListItem
+          primaryText="Add Blog"
+          leftIcon={<ContentSend color={'#3F51B5'} />}
+          containerElement={<Link to={'/addblog'} />}
         />
         {
           this.props.isLogged ?
-          null :
-          <ListItem
-            primaryText="Sign In"
-            leftIcon={<ActionGrade color={'#3F51B5'} />}
-            containerElement={<Link to={'sign'} />}
-          />
+            null :
+            <ListItem
+              primaryText="Sign In"
+              leftIcon={<ActionGrade color={'#3F51B5'} />}
+              containerElement={<Link to={'sign'} />}
+            />
         }
         {
-            this.state.loading ?
+          this.state.loading ?
             <ListItem
               primaryText="My Blogs"
               leftIcon={<ContentInbox color={'#3F51B5'} />}
@@ -73,39 +73,33 @@ class SideBar extends React.Component {
               leftIcon={<ContentInbox color={'#3F51B5'} />}
               initiallyOpen
               primaryTogglesNestedList
-              
+
               nestedItems={
-                this.props.blogs.map((blog) => {
-                  return <ListItem 
-                    key={blog._id}
+                this.props.blogs.map((blog) => <ListItem
+                    key={blog.id}
                     primaryText={blog.title}
-                    containerElement={<Link to={`/blog/${blog._id}`} />}
+                    containerElement={<Link to={`/blog/${blog.id}`} />}
                     hoverColor={'#90CAF9'}
                     style={{
                       'workBreak': 'break-all'
                     }}
-                    />
-                })
-            }
-        />
+                  />)
+              }
+            />
         }
-        
+
       </List>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        blogs: state.myblogs,
-        isLogged: state.user.username
-    };
-};
+const mapStateToProps = (state) => ({
+    blogs: state.myblogs,
+    isLogged: state.user.username
+  });
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        setBlogs: () => dispatch(startDispatchSetBlogs())
-    };
-};
+const mapDispatchToProps = (dispatch) => ({
+    setBlogs: () => dispatch(startDispatchSetBlogs())
+  });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SideBar);

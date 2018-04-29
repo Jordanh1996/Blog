@@ -16,8 +16,8 @@ class EditPage extends React.Component {
 
     componentWillMount() {
         getBlogById(this.props.match.params.id).then((res) => {
-            this.setState(() => ({ 
-                blog: res.data.resblog, 
+            this.setState(() => ({
+                blog: res.data.resblog,
                 loading: false
             }));
         });
@@ -36,37 +36,33 @@ class EditPage extends React.Component {
             <div className="content__divide">
                 {
                     !this.state.loading ?
-                    <BlogForm
-                        blog={this.state.blog}
-                        onSubmit={this.onSubmit}
-                    /> :
-                    <img src='/images/loader.gif' className='image-register' />
+                        <BlogForm
+                            blog={this.state.blog}
+                            onSubmit={this.onSubmit}
+                        /> :
+                        <img src='/images/loader.gif' className='image-register' />
                 }
                 {
                     this.state.err ?
-                    <p>an error occured when trying to edit your blog</p> :
-                    <p></p>
+                        <p>an error occured when trying to edit your blog</p> :
+                        <p />
                 }
                 {
                     this.state.redirect ?
-                    <Redirect to={`/blog/${this.props.match.params.id}`} /> :
-                    <p></p>
+                        <Redirect to={`/blog/${this.props.match.params.id}`} /> :
+                        <p />
                 }
             </div>
         );
     }
 }
 
-const mapStateToProps = (state, props) => {
-    return {
-        blog: state.blogs.find((blog) => blog._id === props.match.params.id)
-    };
-};
+const mapStateToProps = (state, props) => ({
+        blog: state.blogs.find((blog) => blog.id === props.match.params.id)
+    });
 
-const mapDispatchToProps = (dispatch) => {
-    return {
+const mapDispatchToProps = (dispatch) => ({
         editBlog: (id, title, content, image, imageChanged) => dispatch(startDispatchEditBlog(id, title, content, image, imageChanged))
-    };
-};
+    });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditPage);

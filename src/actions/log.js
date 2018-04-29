@@ -12,19 +12,13 @@ export const dispatchLogOut = () => ({
     type: 'LOG_OUT'
 });
 
-export const startDispatchLogIn = (username, password) => {
-    return (dispatch) => {
-        return login(username, password).then((res) => {
-            dispatch(dispatchLogIn(res.data.tokens[0].token, username));
-        });
-    };
-};
+export const startDispatchLogIn = (username, password) => (dispatch) => login(username, password).then((res) => {
+    dispatch(dispatchLogIn(res.data.token, username));
+});
 
-export const startDispatchLogOut = () => {
-    return (dispatch, getState) => {
-        const token = getState().user.token;
-        return logout(token).then(() => {
-            dispatch(dispatchLogOut());
-        });
-    };
+export const startDispatchLogOut = () => (dispatch, getState) => {
+    const token = getState().user.token;
+    return logout(token).then(() => {
+        dispatch(dispatchLogOut());
+    });
 };
