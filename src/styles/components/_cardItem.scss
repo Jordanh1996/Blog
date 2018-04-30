@@ -1,0 +1,17 @@
+.cardItem {
+    margin: 1rem;
+
+
+    .cardItem-button {
+        opacity: 0 !important;
+        transform: scale(0);
+        transition: transform 0.3s, opacity 1s !important;
+    }
+
+    &:hover{
+        .cardItem-button {
+            transform: scale(1);
+            opacity: 1 !important;
+        }
+    }
+}

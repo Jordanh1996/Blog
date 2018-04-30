@@ -11,9 +11,7 @@ class BlogItem extends React.Component {
     render() {
         return (
             <Card
-                style={{
-                    margin: '1rem'
-                }}
+                className='cardItem'
             >
                 <CardHeader
                     title={this.props.title}
@@ -31,7 +29,11 @@ class BlogItem extends React.Component {
                 />
                 <CardActions>
                     <Link to={`/blog/${this.props.id}`}>
-                        <RaisedButton label="View in Page" primary />
+                        <RaisedButton
+                            label="View in Page"
+                            primary
+                            className='cardItem-button'
+                        />
                     </Link>
                 </CardActions>
                 <CardText expandable>

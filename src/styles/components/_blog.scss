@@ -1,6 +1,7 @@
 .blog__content {
     word-break: normal;
     white-space: pre-line;
+    font-size: $font-size-large;
 }
 
 .blog__edited {
@@ -15,4 +16,9 @@
 .blog__loading {
     margin-left: $s-size;
     color: $dark-grey;
+}
+
+.blog__button {
+    margin: 1rem;
+    width: calc(100% - 2rem);
 }
