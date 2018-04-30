@@ -91,7 +91,7 @@ class Blog extends React.Component {
                 }
                 {
                     this.state.blog ?
-                        this.props.user ?
+                        this.props.user.username ?
                             <MessageForm
                                 ref='messageForm'
                                 onMessageSubmit={this.onMessageSubmit}
